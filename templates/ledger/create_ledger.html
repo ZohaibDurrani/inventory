@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% block submenu_add_new_ledger %}active{% endblock %}
+{% block menu_ledger %}active{% endblock %}
+{% block content %}
+<div class="col-md-6">
+    <br>
+    <a href="{% url 'ledger:customer_ledger_list' %}"><button type="button" id="back-customer" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Ledger List</button></a>
+    <br><br><br>
+    <div class="content-panel">
+        <h3 class="text-center">{{ request.user.retailer_user.retailer.name }} Customer / Ledger</h3>
+        <div class="panel-body">
+            <form class="form-horizontal add-ledger-form" action="{% url 'ledger:add_new_ledger' %}" method="post" autocomplete="off">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        {% csrf_token %}
+                        <label><strong>Customer Name</strong></label>
+                        <span class="customer-existing" style="color: red; display: none" >Customer Already Exisit</span>
+                        <span class="customer-error" style="color: red; display: none" >this field is requried</span>
+                        <input type="text" class="form-control customer" name="customer_name" placeholder="Name"><br>
+                        <label><strong>Customer phone</strong></label>
+                        <span class="customer-phone-error" style="color: red; display: none" >this field is requried</span>
+                        <input type="text" class="form-control customer_phone" name="customer_phone" placeholder="Phone"><br>
+                        <label><strong>Customer Type</strong></label>
+                        <span class="customer-type-error" style="color: red; display: none" >this field is requried</span>
+                        <input type="text" class="form-control customer_type" name="customer_type" placeholder="Person Type">
+                        <span style="color:#00ccff">For example: Retailer, WholeSale Dealer etc</span><br><br>
+                        <label><strong>Amount</strong></label>
+                        <span class="amount-error" style="color: red; display: none" >this field is requried</span>
+                        <input type="text" class="form-control amount" name="amount" placeholder="Amount"><br>
+                        <label><strong>Description</strong></label>
+                        <span class="description-error" style="color: red; display: none" >this field is requried</span>
+                        <textarea maxlength="500" rows="4" name="description" class="form-control description"  placeholder ="Description"></textarea> <br>
+                        <input type="hidden" name="retailer" value="{{ request.user.retailer_user.retailer.id }}">
+                        <button type="button" id="save" class="btn btn-primary ledger-submit-btn" style="float: right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">Save Ledger</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+        $('document').ready(function () {
+
+            $('.ledger-submit-btn').on ('click', function () {
+                $(this).addClass('disabled');
+                $(this).html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading...');
+                var error = false;
+
+                if ($('.customer').val() ==""){
+                    $('.customer-error').show();
+                    error= true;
+                }
+                else {
+                    $('.customer-error').hide();
+                }
+                if ($('.customer_phone').val() ==""){
+                    $('.customer-phone-error').show();
+                    error= true;
+                }
+                else {
+                    $('.customer-phone-error').hide();
+                }
+                if ($('.customer_type').val() ==""){
+                    $('.customer-type-error').show();
+                    error= true;
+                }
+                else {
+                    $('.customer-type-error').hide();
+                }
+
+                if ($('.amount').val() =="" ) {
+                    $('.amount-error').show();
+                    error = true;
+                }
+                else {
+                    $('.customer-error').hide();
+                }
+                if ($('.description').val()== ""){
+                    $('.description-error').show();
+                    error =true ;
+                }
+                else {
+                    $('.description-error').hide();
+                }
+                if (error == true ) {
+                    $(this).removeClass('disabled');
+                    $(this).html('Save');
+                    return;
+                } else {
+                    {% for customer in customers %}
+                        if ($('.customer_phone').val()== '{{ customer.customer_phone }}') {
+                            $('.customer-existing').show();
+                            return;
+                        }
+                    {% endfor %}
+                }
+
+                if (error == false) {
+                    $('.add-ledger-form').submit();
+                }
+                 else {
+                     $(this).removeClass('disabled');
+                     $(this).html('Save Ledger');
+                     return;
+                 }
+            });
+
+            $('.customer').keyup(function () {
+                $('.customer-error').hide();
+            });
+
+
+            $('.customer_phone').keyup(function () {
+               $('.customer-phone-error').hide();
+               checkDec(this);
+            });
+            function checkDec(el){
+            var ex = /^[0-9]+\.?[0-9]*$/;
+            if(ex.test(el.value)==false){
+                el.value = el.value.substring(0,el.value.length - 1);
+            }
+        }
+            $('.amount').keyup(function () {
+               $('.amount-error').hide();
+                checkDec(this);
+            });
+            function checkDec(el){
+            var ex = /^[0-9]+\.?[0-9]*$/;
+            if(ex.test(el.value)==false){
+                el.value = el.value.substring(0,el.value.length - 1);
+            }
+        }
+            $('.customer_type').keyup(function () {
+                $('.customer-type-error').hide();
+            });
+            $('.description').keyup(function () {
+                $('.description-error').hide();
+            });
+        });
+
+    </script>
+<script>
+
+$('#back-customer').on('click', function() {
+    var $this = $(this);
+  $this.button('loading');
+    setTimeout(function() {
+       $this.button('reset');
+   }, 5000);
+});
+
+    </script>
+
+{% endblock %}

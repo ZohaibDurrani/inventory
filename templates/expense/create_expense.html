@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block submenu_create_expense %}active{% endblock %}
+{% block menu_expense %}active{% endblock %}
+{% block content %}
+    <div class="col-md-6">
+        <br>
+        <a href="{% url 'expense:expense_list' %}"><button type="button" id="expense" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Expense List</button></a>
+        <br><br><br>
+        <div class="content-panel">
+            <h3 class="text-center">{{ request.user.retailer_user.retailer.name }} Expense</h3>
+            <div class="panel-body">
+                <form class="form-horizontal add-ledger-form" action="{% url 'expense:add_new_expense' %}" method="post" autocomplete="off">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            {% csrf_token %}
+                            <label><strong>Amount</strong></label>
+                            <span class="amount-error" style="color: red; display: none" >this field is requried</span>
+                            <input type="text" class="form-control amount" name="amount" placeholder="Amount"><br>
+                            <label><strong>Description</strong></label>
+                            <span class="description-error" style="color: red; display: none" >this field is requried</span>
+                            <textarea class="form-control description" name="description" placeholder="Description"></textarea><br>
+                            <label><strong>Date</strong></label>
+                            <span class="date-error" style="color: red; display: none" >this field is requried</span>
+                            <input type="text" class="form-control date" name="date" placeholder=" Date" onfocus="(this.type='date')" onblur="(this.type='text')"><br>
+                            <input type="hidden" name="retailer" value="{{ request.user.retailer_user.retailer.id }}">
+                            <button type="button" id="save" class="btn btn-primary ledger-submit-btn" style="float: right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">Save Expense</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('document').ready(function () {
+
+            $('.ledger-submit-btn').on ('click', function () {
+                $(this).addClass('disabled');
+                $(this).html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading...');
+                var error = false;
+
+                if ($('.amount').val() ==""){
+                    $('.amount-error').show();
+                    error= true;
+                }
+                else {
+                    $('.amount-error').hide();
+                }
+                if ($('.description').val() ==""){
+                    $('.description-error').show();
+                    error= true;
+                }
+                else {
+                    $('.description-error').hide();
+                }
+
+                if ($('.date').val() =="" ) {
+                    $('.date-error').show();
+                    error = true;
+                }
+                else {
+                    $('.date-error').hide();
+                }
+                if (error == true ) {
+                    $(this).removeClass('disabled');
+                    $(this).html('Save');
+                    return;
+                }
+
+                if (error == false) {
+                    $('.add-ledger-form').submit();
+                }
+                 else {
+                     $(this).removeClass('disabled');
+                     $(this).html('Save');
+                     return;
+                 }
+            });
+
+            $('.customer').keyup(function () {
+                $('.customer-error').hide();
+            });
+
+
+            $('.customer_phone').keyup(function () {
+               $('.customer-phone-error').hide();
+               checkDec(this);
+            });
+            function checkDec(el){
+            var ex = /^[0-9]+\.?[0-9]*$/;
+            if(ex.test(el.value)==false){
+                el.value = el.value.substring(0,el.value.length - 1);
+            }
+        }
+            $('.amount').keyup(function () {
+               $('.amount-error').hide();
+                checkDec(this);
+            });
+            function checkDec(el){
+            var ex = /^[0-9]+\.?[0-9]*$/;
+            if(ex.test(el.value)==false){
+                el.value = el.value.substring(0,el.value.length - 1);
+            }
+        }
+            $('.description').keyup(function () {
+                $('.description-error').hide();
+            });
+        });
+
+    </script>
+<script>
+
+$('#expense').on('click', function() {
+    var $this = $(this);
+  $this.button('loading');
+    setTimeout(function() {
+       $this.button('reset');
+   }, 5000);
+});
+
+    </script>
+
+{% endblock %}

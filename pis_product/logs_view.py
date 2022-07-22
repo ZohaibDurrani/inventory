@@ -102,12 +102,16 @@ class MonthlyStockLogs(ListView):
             'January', 'February', 'March', 'April', 'May', 'June',
             'July', 'August', 'September', 'October', 'November', 'December'
         ]
-
+        
         if self.logs_month:
             self.year = current_date.year
             month = self.logs_month
-
-            if month < months.index(self.logs_month) + 1:
+            # print('Before nested if')
+            print(month)
+            print(months.index(self.logs_month)+1)
+            # if month < months.index(self.logs_month) + 1:
+            if month not in months:
+                print('After')
                 self.year = self.year - 1
 
             queryset = StockOut.objects.filter(

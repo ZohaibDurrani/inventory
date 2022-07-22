@@ -32,3 +32,4 @@
 
 /partum_inventory/settings_local.py
 db.local_inventory
+inventory

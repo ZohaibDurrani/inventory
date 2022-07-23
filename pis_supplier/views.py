@@ -113,11 +113,12 @@ class AddSupplierStatement(FormView):
     def dispatch(self, request, *args, **kwargs):
         if not self.request.user.is_authenticated:
             return HttpResponseRedirect(reverse('login'))
-        return super(
-            AddSupplierStatement, self).dispatch(request, *args, **kwargs)
+        return super(AddSupplierStatement, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         obj = form.save()
+        # print(self.request.POST.get('supplier_name').split('-')[0].strip())
+        # print(Supplier.objects.get(name=self.request.POST.get('supplier_name')))
         obj.supplier = Supplier.objects.get(name=self.request.POST.get('supplier_name'))
         obj.save()
         return HttpResponseRedirect(reverse(

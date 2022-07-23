@@ -15,7 +15,7 @@
                         {% csrf_token %}
                         <label><strong>Name</strong></label>
                         <span class="name-error" style="color: red; display: none" >this field is requried</span>
-                        <input type="text" class="form-control name" name="supplier_name" value="{{ supplier }}" placeholder="{{ supplier }}" readonly><br>
+                        <input type="text" class="form-control name" name="supplier_name" value="{{ supplier.name }}" placeholder="{{ supplier }}" readonly><br>
                         <label><strong>Supplier Amount</strong></label>
                         <span class="father_name-error" style="color: red; display: none" >this field is requried</span>
                         <input type="text" class="form-control father_name" name="supplier_amount" placeholder="Total Amount"><br>

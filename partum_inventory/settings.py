@@ -136,17 +136,17 @@ STATIC_URL = '/app_static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 WHITENOISE_USE_FINDERS = True
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "app_static"),##.replace('\\', '/'),
     # '/var/www/static/',
 ]
 
-# DEBUG_PROPAGATE_EXCEPTIONS = True
-# COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
+DEBUG_PROPAGATE_EXCEPTIONS = True
+COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root/')
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())

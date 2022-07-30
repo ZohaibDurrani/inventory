@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '2j-tes@g+5%*wg!^o8h49br$0^$y7=)ai32vi3&sey2r0j209_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['radi-gul.herokuapp.com','127.0.0.1','.herokuapp.com']
 
@@ -144,8 +144,8 @@ STATICFILES_DIRS = [
     # '/var/www/static/',
 ]
 
-# DEBUG_PROPAGATE_EXCEPTIONS = True
-# COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
+DEBUG_PROPAGATE_EXCEPTIONS = True
+COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root/')

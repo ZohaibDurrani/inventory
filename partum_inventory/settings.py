@@ -149,4 +149,4 @@ COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root/')
 
-# django_heroku.settings(locals())
+django_heroku.settings(locals())

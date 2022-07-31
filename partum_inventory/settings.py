@@ -143,7 +143,7 @@ WHITENOISE_USE_FINDERS = True
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "app_static"),##.replace('\\', '/'),
-    # '/var/www/static/',
+    '/var/www/static/',
 ]
 
 DEBUG_PROPAGATE_EXCEPTIONS = True

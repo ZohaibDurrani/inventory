@@ -136,14 +136,14 @@ STATIC_URL = '/app_static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_ROOT = os.path.join(BASE_DIR, 'app_static/')
 
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 WHITENOISE_USE_FINDERS = True
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "app_static"),##.replace('\\', '/'),
-    '/var/www/static/',
+    # '/var/www/static/',
 ]
 
 DEBUG_PROPAGATE_EXCEPTIONS = True

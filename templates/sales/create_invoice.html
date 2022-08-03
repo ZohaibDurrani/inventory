@@ -217,14 +217,14 @@
             });
 
 
-            $('.invoice-item').live('focusout', function(){
+            $('body').on('focusout','.invoice-item', function(){
                 var item_price = $(this).parent().parent().find("option[value='" + $(this).val() + "']").data('price');
                 $(this).parent().parent().parent().find('.price').val(item_price);
 
                 var stock = $(this).parent().parent().find("option[value='" + $(this).val() + "']").data('stock')
                 $(this).parent().parent().parent().find('.stock').html(stock);
             });
-            $('#create-invoice').live('click', function () {
+            $('body').on('click','#create-invoice', function () {
 
                 if ($('#item-name').hasClass('item-name') == false ) {
                     $('.item-error').show();

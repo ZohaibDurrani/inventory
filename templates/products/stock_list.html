@@ -22,6 +22,7 @@
                     <tr>
                         <th class="text-center">Item Name</th>
                         <th class="text-center">Brand Name</th>
+                        <th class="text-center">Category</th>
                         <th class="text-center">Unit Type</th>
                         <th class="text-center">Total Items</th>
                         <th class="text-center">Available Items</th>
@@ -35,7 +36,9 @@
                         <tr>
                             <td><a href="{% url 'product:item_details' pk=item.id %}">{{ item.name}}</a></td>
                             <td class="#">{{ item.brand_name }}</td>
+                            <td class="#">{{ item.product_category }}</td>
                             <td class="#">{{ item.unit_type }}</td>
+                            
                             <td>{{ item.total_items|floatformat:-2 }}</td>
                             <td>{{ item.product_available_items|floatformat:-2 }}</td>
                             <td>{{ item.product_purchased_items|floatformat:-2 }}</td>

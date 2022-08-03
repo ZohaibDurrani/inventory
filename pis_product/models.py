@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from unicodedata import category
 from django.db import models
 from django.db.models import Sum
 import random
@@ -24,6 +25,7 @@ class Product(models.Model):
         blank=True, null=True, max_length=200
     )
     name = models.CharField(max_length=100, unique=True)
+    product_category=models.CharField(max_length=100, blank=True, null=True,default='')
     brand_name = models.CharField(max_length=200, blank=True, null=True)
     retailer = models.ForeignKey(
         'pis_retailer.Retailer',

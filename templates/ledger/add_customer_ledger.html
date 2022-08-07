@@ -4,27 +4,27 @@
 {% block content %}
 <div class="col-md-6">
     <br>
-    <a href="{% url 'ledger:customer_ledger_list'%}"><button type="button" id="back-customer" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Ledger List</button></a>
+    <a href="{% url 'ledger:customer_ledger_list'%}"><button type="button" id="back-customer" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">لسٹ کھاتا  </button></a>
     <br><br><br>
     <div class="content-panel">
-        <h3 class="text-center">{{ customer.customer_name }} <small>New Ledger</small></h3>
+        <h3 class="text-center">{{ customer.customer_name }} <small>نیاکھاتا</small></h3>
         <div class="panel-body">
             <form class="form-horizontal new_ledger" action="{% url 'ledger:add_ledger' customer_id=customer.id %}" method="post" autocomplete="off">
                 <div class="form-group">
                     <div class="col-sm-12">
                         {% csrf_token %}
-                        <label><strong>Amount</strong></label>
+                        <label class="pull-right"><strong>رقم</strong></label>
                         <span class="amount-error" style="color: red; display: none" >This Field is Requried</span>
-                        <input type="text" class="form-control amount" name="amount" placeholder="Amount"><br>
-                        <label><strong>Date</strong></label>
+                        <input type="text" class="form-control amount text-right" name="amount" placeholder="رقم"><br>
+                        <label class="pull-right"><strong>تاریخ</strong></label>
                         <span class="date-error" style="color: red; display: none" >This Field is Requried</span>
-                        <input type="date" class="form-control date" name="dated"><br>
-                        <label><strong>Description</strong></label>
+                        <input type="date" class="form-control date text-right" name="dated"><br>
+                        <label class="pull-right"><strong>تفصیل</strong></label>
                         <span class="description-error" style="color: red; display: none" >This Field is Requried</span>
-                        <textarea maxlength="500" rows="4" name="description" class="form-control description"  placeholder ="Description"></textarea> <br>
+                        <textarea maxlength="500" rows="4"  name="description" class="text-right form-control description"  placeholder ="تفصیل"></textarea> <br>
                         <input type="hidden" name="customer" value="{{ customer.id }}">
                         <input type="hidden" name="retailer" value="{{ request.user.retailer_user.retailer.id }}">
-                        <button type="button" id="save" class="btn btn-primary ledger-submit-btn" style="float: right" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">Save Ledger</button>
+                        <button type="button" id="save" class="btn btn-primary ledger-submit-btn" style="float: right" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">کھاتا محفوظ کریں۔</button>
 
                     </div>
                 </div>

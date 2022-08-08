@@ -3,34 +3,34 @@
 {% block content %}
     <div class="col-md-6">
         <br>
-        <a href="{% url 'product:items_list' %}"><button type="button" id="back-product" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Product List</button></a>
+        <a href="{% url 'product:items_list' %}"><button type="button" id="back-product" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">مصنوعات کی فہرست</button></a>
         <br><br><br>
         <div class="content-panel">
-            <h3 class="text-center">{{ request.user.retailer_user.retailer.name }} <small>Product Update Form</small></h3>
-             <span class="item_list_error text-center" style="color:red; display:none">item is already exist</span>
+            <h3 class="text-center">{{ request.user.retailer_user.retailer.name }} <small>مصنوعات اپ ڈیٹ فارم</small></h3>
+             <span class="item_list_error text-center" style="color:red; display:none">اس کو پر کرنا ضروری ہے</span>
             <div class="panel-body">
                 <form class="form-horizontal add-product-form" action="{% url 'product:update_product' pk=object.id %}" method="post" autocomplete="off">
                     <div class="form-group">
                         <div class="col-sm-12">
                             {% csrf_token %}
-                            <label><strong>Item Name</strong></label>
-                            <input type="text" class="form-control product_name" name="name"   placeholder="Product Name" value="{{ object.name|title }}"><br>
-                            <label><strong>Item Brand Name</strong></label>
-                            <input type="text" class="form-control brand_name" name="brand_name" placeholder="Brand Name" value="{{ object.brand_name|title }}"><br>
-                            <label><strong>Item Unit Type</strong></label>
-                             <input type="text" class="form-control unit_type" name="unit_type" placeholder="Unit Type" list="unit-list" value="{{ object.unit_type }}">
+                            <label class="pull-right"><strong>شے کا نام</strong></label>
+                            <input type="text" class="form-control product_name" style="text-align: right;" name="name"   placeholder="شے کا نام" value="{{ object.name|title }}"><br>
+                            <label class="pull-right"><strong>شے کے برانڈ کا نام</strong></label>
+                            <input type="text" class="form-control brand_name" style="text-align: right;" name="brand_name" placeholder="شے کے برانڈ کا نام" value="{{ object.brand_name|title }}"><br>
+                            <label class="pull-right"><strong>یونٹ کی قسم</strong></label>
+                             <input type="text" class="form-control unit_type" style="text-align: right;" name="unit_type" placeholder="یونٹ کی قسم" list="unit-list" value="{{ object.unit_type }}">
                                     <datalist id="unit-list">
-                                        <option value="Kilogram"></option>
-                                        <option value="Gram"></option>
-                                        <option value="Litre"></option>
-                                        <option value="Quantity"></option>
+                                        <option value="کلو گرام"></option>
+                                        <option value="گرام"></option>
+                                        <option value="پارسل"></option>
+                                        <option value="مقدار"></option>
                                     </datalist>
                                     <br>
-                            <label><strong>Item Barcode</strong></label>
-                            <input type="number" class="form-control bar_code" name="bar_code" value="{{ object.bar_code }}">
-                            <span style="color: lightseagreen">Note: For empty value system will generate barcode automatically</span><br>
+                            <label class="pull-right"><strong>آئٹم بارکوڈ</strong></label>
+                            <input type="number" class="form-control bar_code" style="text-align: right;" name="bar_code" value="{{ object.bar_code }}">
+                            <span style="color: #ff0000">نوٹ: اگر خانہ خالی ہو تو سسٹم خود بخود بار کوڈ تیار کر لے گا۔</span><br>
                             <input type="hidden" name="retailer" value="{{ request.user.retailer_user.retailer.id }}">
-                            <button type="submit" id="save" class="btn btn-primary product-submit-btn" style="float: right" >Update Item</button>
+                            <button type="submit" id="save" class="btn btn-primary product-submit-btn" style="float: right" >اشیاء کو اپ ڈیٹ کریں۔</button>
                         </div>
                     </div>
                 </form>

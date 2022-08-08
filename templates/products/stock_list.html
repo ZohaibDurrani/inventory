@@ -2,52 +2,71 @@
 {% block menu_product %}active{% endblock %}
 {% block submenu_list_items %}active{% endblock %}
 {% block content %}
+<style>
+    input::placholder {
+  text-align:'right';
+}
+
+</style>
     <div class="col-md-12">
-            <br>
-            <a href="{% url 'product:add_product' retailer_id=request.user.retailer_user.retailer.id %}"><button type="button" id="add-product" class="btn btn-primary"  id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Add Product </button></a>
-            <br><br><br>
+        <br>
+        <div class="pull-right" style="right: -80px">
+
+            <a href="{% url 'product:add_product' retailer_id=request.user.retailer_user.retailer.id %}"><button type="button" style="left:100px" id="add-product" class="btn btn-primary"  id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">مصنوعات شامل کریں</button></a>
+            
+        </div>
+        <br>
+        <br><br>
             <div class="content-panel table-responsive">
                 <table class="table table-striped table-bordered table-advance table-hover item-table">
-                    <h2 class="text-center">Stock Products</h2>
+                    <h2 class="text-center">اسٹاک مصنوعات</h2>
                     <div class="row" style="padding: 5px">
-                        <div class="col-lg-4">
-                            <input type="text" class="form-control name_search" placeholder="Search by Item Name ..." value="{{ search_value_name }}">
+                        <div class="col-lg-4 pull-right" style="right:-850px">
+                            <input type="text" style="text-align: right;" class="form-control name_search" placeholder="تلاش کریں" value="{{ search_value_name }}">
                         </div>
-                        <div class="col-lg-2">
-                            <button class="btn btn-primary search">Search</button>
+                        <div class="col-lg-2 pull-right" style="right: -330px">
+                            <button class="btn btn-primary search">تلاش کریں</button>
                         </div>
                     </div>
                     <hr>
                     <thead>
                     <tr>
-                        <th class="text-center">Item Name</th>
-                        <th class="text-center">Brand Name</th>
-                        <th class="text-center">Category</th>
-                        <th class="text-center">Unit Type</th>
-                        <th class="text-center">Total Items</th>
-                        <th class="text-center">Available Items</th>
-                        <th class="text-center">Purchased Items</th>
-                        <th class="text-center">Bar Code</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center">اعمال</th>
+                        <th class="text-center">بار کوڈ</th> 
+                        <th class="text-center">خریدی گئی اشیاء</th> 
+                        <th class="text-center">دستیاب اشیاء</th>
+                        <th class="text-center">کل اشیاء</th>
+                        <th class="text-center">یونٹ کی قسم</th>  
+                        <th class="text-center">مصنوعات کی قسم</th> 
+                        <th class="text-center">برانڈ کا نام</th> 
+                        <th class="text-center">شے کا نام</th>
                     </tr>
                     </thead>
                     <tbody class="product-table-body text-center">
                     {% for item in object_list %}
                         <tr>
-                            <td><a href="{% url 'product:item_details' pk=item.id %}">{{ item.name}}</a></td>
+                            <td>
+                                <a href="{% url 'product:stockout_list' product_id=item.id %}"><button class="btn btn-danger btn-xs" title="Stock Out"><i class="fa fa-minus"></i></button></a>
+                                <a href="{% url 'product:stockin_list' product_id=item.id %}"><button class="btn btn-primary btn-xs"><i class="fa fa-plus"></i></button></a>
+                                <a href="{% url 'product:update_product' pk=item.id %}"><button class="btn btn-success btn-xs"><i class="fa fa-edit"></i></button></a>
+                            </td>
+                            <td>{{ item.bar_code }}</td>
+                            <td>{{ item.product_purchased_items|floatformat:-2 }}</td>
+                            <td>{{ item.product_available_items|floatformat:-2 }}</td>
+                            <td>{{ item.total_items|floatformat:-2 }}</td>
+
+                            <!-- <td><a href="{% url 'product:item_details' pk=item.id %}">{{ item.name}}</a></td>
                             <td class="#">{{ item.brand_name }}</td>
                             <td class="#">{{ item.product_category }}</td>
                             <td class="#">{{ item.unit_type }}</td>
+                             -->
+
+                            <td class="#">{{ item.unit_type }}</td>
+                            <td class="#">{{ item.product_category }}</td>
+                            <td class="#">{{ item.brand_name }}</td>
+                            <td><a href="{% url 'product:item_details' pk=item.id %}">{{ item.name}}</a></td>
+
                             
-                            <td>{{ item.total_items|floatformat:-2 }}</td>
-                            <td>{{ item.product_available_items|floatformat:-2 }}</td>
-                            <td>{{ item.product_purchased_items|floatformat:-2 }}</td>
-                            <td>{{ item.bar_code }}</td>
-                            <td>
-                                <a href="{% url 'product:update_product' pk=item.id %}"><button class="btn btn-success btn-xs"><i class="fa fa-edit"></i></button></a>
-                                <a href="{% url 'product:stockin_list' product_id=item.id %}"><button class="btn btn-primary btn-xs"><i class="fa fa-plus"></i></button></a>
-                                <a href="{% url 'product:stockout_list' product_id=item.id %}"><button class="btn btn-danger btn-xs" title="Stock Out"><i class="fa fa-minus"></i></button></a>
-                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

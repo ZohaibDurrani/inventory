@@ -3,26 +3,26 @@
 {% block content %}
     <div class="col-md-6">
         <br>
-        <a href="{% url 'employee:employee_list' %}"><button type="button" id="empolyee" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Employee List</button></a>
+        <a href="{% url 'employee:employee_list' %}"><button type="button" id="empolyee" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">ملازمین کی فہرست</button></a>
         <br><br><br>
         <div class="content-panel">
-            <h3 class="text-center">{{ request.user.retailer_user.retailer.name }} Add Employee</h3>
+            <h3 class="text-center">تنخواہ شامل کریں            </h3>
             <div class="panel-body">
                 <form class="form-horizontal add-ledger-form" action="{% url 'employee:employee_salary' pk=employee.pk %}" method="post" autocomplete="off">
                     <div class="form-group">
                         <div class="col-sm-12">
                             {% csrf_token %}
-                            <label><strong>Name</strong></label>
+                            <label class="pull-right"><strong>نام</strong></label>
                             <span class="name-error" style="color: red; display: none" >this field is requried</span>
-                            <input type="text" class="form-control customer-name" name="employee_name"  value="{{employee.name}}" readonly> <br>
-                            <label><strong>Salary</strong></label>
+                            <input type="text" class="form-control customer-name text-right" name="employee_name"  value="{{employee.name}}" readonly> <br>
+                            <label class="pull-right"><strong>تنخواہ</strong></label>
                             <span class="salary_amount-error" style="color: red; display: none" >this field is requried</span>
-                            <input type="text" class="form-control salary_amount" name="salary_amount" placeholder="Salary Amount"><br>
-                            <label><strong>Date</strong></label>
+                            <input type="text" class="form-control salary_amount text-right" name="salary_amount" placeholder="تنخواہ کی رقم"><br>
+                            <label class="pull-right"><strong>تاریخ</strong></label>
                             <span class="date-error" style="color: red; display: none" >this field is requried</span>
-                            <input type="text" class="form-control date" name="date" placeholder=" Date" onfocus="(this.type='date')" onblur="(this.type='text')"><br>
+                            <input type="text" class="form-control date text-right" name="date" placeholder=" تاریخ" onfocus="(this.type='date')" onblur="(this.type='text')"><br>
                             <input type="hidden" name="retailer" value="{{ request.user.retailer_user.retailer.id }}">
-                            <button type="button" id="save" class="btn btn-primary ledger-submit-btn" style="float: right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">Save Salary</button>
+                            <button type="button" id="save" class="btn btn-primary ledger-submit-btn" style="float: right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">تنخواہ شامل کریں </button>
                         </div>
                     </div>
                 </form>

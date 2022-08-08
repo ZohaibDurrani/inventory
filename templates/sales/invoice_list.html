@@ -5,45 +5,61 @@
 {% block content %}
     <div class="col-md-12">
             <br>
-        <a href="{% url 'sales:create_invoice' %}"><button type="button" id="invoice" class="btn btn-primary"  id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Create Invoice</button></a>
+        <a href="{% url 'sales:create_invoice' %}"><button type="button" id="invoice" class="btn btn-primary"  id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">رسید بنائیں</button></a>
         <br><br><br>
             <div class="content-panel table-responsive">
                 <table class="table table-striped table-advance table-hover table-bordered invoice-table">
-                    <h2 class="text-center">Sales List</h2>
-                    <div class="input-group custom-search-form col-md-4" style="left: 5px">
-                        <input type="text" class="form-control search-invoice" placeholder="Search...">
+                    <h2 class="text-center">فروخت کی فہرست
+                    </h2>
+                    <div class="input-group custom-search-form col-md-4 pull-right" style="right: 5px">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button">
                                 <i class="fa fa-search"></i>
                             </button>
                         </span>
+                        <input type="text" class="form-control search-invoice pull-right" placeholder="تلاش کریں...">
+                        
                     </div>
-                    <hr>
+                    <!-- <hr> -->
                     <thead>
                     <tr>
-                        <th class="text-center"><i class=" fa fa-bookmark"></i> Receipt No.</th>
-{#                      <th class="text-center"class="text-center"><i class="fa fa-bullhorn"></i> Customer Name</th>#}
-                        <th class="text-center"><i class="fa fa-question-circle"></i> Customer</th>
-                        <th class="text-center"><i class=" fa fa-edit"></i> Quantity</th>
-                        <th class="text-center"><i class=" fa fa-try"></i> Grand Total</th>
-                        <th class="text-center"><i class=" fa fa-calendar"></i> Date</th>
-                        <th class="text-center">Actions</th>
+                        <!-- <tr>
+                            <th class="text-center"><i class=" fa fa-bookmark"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"/font></font></th>
+    
+                            <th class="text-center"><i class="fa fa-question-circle"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"/font></font></th>
+                            <th class="text-center"><i class=" fa fa-edit"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"/font></font></th>
+                            <th class="text-center"><i class=" fa fa-try"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">مجموعی عدد</font></font></th>
+                            <th class="text-center"><i class=" fa fa-calendar"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></th>
+                            <th class="text-center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></th>
+                        </tr> -->
+                        <th class="text-center">اعمال</th>
+                        <th class="text-center"><i class=" fa fa-calendar"></i>تاریخ</th>
+                     <th class="text-center"class="text-center"><i class="fa fa-bullhorn"></i>مجموعی عدد</th>
+                        <th class="text-center"><i class="fa fa-question-circle"></i>مقدار</th>
+                        <th class="text-center"><i class=" fa fa-edit"></i>صارف</th>
+                        <th class="text-center"><i class=" fa fa-try"></i> رسید نمبر.</th>
+                        
                     </tr>
                     </thead>
                     <tbody class="invoice-table-body text-center">
                     {% for invoice in object_list %}
                         <tr>
-                            <td><a href="{% url 'sales:invoice_detail' invoice_id=invoice.id %}">{{ invoice.receipt_no }}</a></td>
-                            <td>{% if invoice.customer %}{{ invoice.customer.customer_name|title}}{% else %}-{% endif %}</td>
-                            <td>{{ invoice.total_quantity }}</td>
-                            <td>{{ invoice.grand_total|floatformat:-2 }}</td>
-                            <td>{{ invoice.created_at|date }}</td>
                             <td>
                                 <a href="{% url 'sales:invoice_update' id=invoice.id %}"><button class="btn btn-primary btn-xs"><i class="fa fa-edit" title="Invoice list"></i></button></a>
                                 <a href="{% url 'sales:invoice_detail' invoice_id=invoice.id %}"><button class="btn btn-success btn-xs"><i class="fa fa-eye" title="Invoice list"></i></button></a>
                                 <a href="{% url 'sales:delete' pk=invoice.id %}"><button class="btn btn-danger btn-xs delete" onClick="deleteFunction()"><i class="fa fa-minus"></i></button></td>
 
                             </td>
+                            <td>{{ invoice.created_at|date }}</td>
+
+                            <td>{{ invoice.grand_total|floatformat:-2 }}</td>
+
+                            <td>{{ invoice.total_quantity }}</td>
+
+                            <td>{% if invoice.customer %}{{ invoice.customer.customer_name|title}}{% else %}-{% endif %}</td>
+
+                            <td><a href="{% url 'sales:invoice_detail' invoice_id=invoice.id %}">{{ invoice.receipt_no }}</a></td>
+
                         </tr>
                     {% endfor %}
                     </tbody>

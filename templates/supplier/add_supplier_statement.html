@@ -4,30 +4,30 @@
 {% block content %}
 <div class="col-md-6">
     <br>
-    <a href="#"><button type="button" id="empolyee" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Name</button></a>
+    <!-- <a href="#"><button type="button" id="empolyee" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Name</button></a> -->
     <br><br><br>
     <div class="content-panel">
-        <h3 class="text-center"> Add Statement</h3>
+        <h3 class="text-center"> بیان شامل کریں۔</h3>
         <div class="panel-body">
             <form class="form-horizontal add-ledger-form" action="{% url 'supplier:add_supplier_statement' pk=supplier.id %}" method="post" autocomplete="off">
                 <div class="form-group">
                     <div class="col-sm-12">
                         {% csrf_token %}
-                        <label><strong>Name</strong></label>
+                        <label class="pull-right"><strong>نام</strong></label>
                         <span class="name-error" style="color: red; display: none" >this field is requried</span>
-                        <input type="text" class="form-control name" name="supplier_name" value="{{ supplier.name }}" placeholder="{{ supplier }}" readonly><br>
-                        <label><strong>Supplier Amount</strong></label>
+                        <input type="text" class="form-control name text-right"  name="supplier_name" value="{{ supplier.name }}" placeholder="{{ supplier }}" readonly><br>
+                        <label class="pull-right"><strong>فراہم کنندہ کی رقم</strong></label>
                         <span class="father_name-error" style="color: red; display: none" >this field is requried</span>
-                        <input type="text" class="form-control father_name" name="supplier_amount" placeholder="Total Amount"><br>
-                        <label><strong>Payment Amount</strong></label>
+                        <input type="text" class="form-control father_name text-right" name="supplier_amount" placeholder="کل رقم"><br>
+                        <label class="pull-right"><strong>ادائیگی کی رقم</strong></label>
                         <span class="mobile-error" style="color: red; display: none" >this field is requried</span>
-                        <input type="text" class="form-control mobile" name="payment_amount" placeholder="Payable Amount"><br>
-                        <label><strong>description no</strong></label>
-                        <input type="text" class="form-control mobile" name="description" placeholder="Description"><br>
-                        <label><strong>Date</strong></label>
-                        <input type="date" class="form-control mobile" name="date" placeholder="Date"><br>
+                        <input type="text" class="form-control mobile text-right" name="payment_amount" placeholder="قابل ادائیگی رقم"><br>
+                        <label class="pull-right"><strong>تفصیل نمبر</strong></label>
+                        <input type="text" class="form-control mobile text-right" name="description" placeholder="تفصیل"><br>
+                        <label class="pull-right"><strong>تاریخ</strong></label>
+                        <input type="date" class="form-control mobile text-right" name="date" placeholder="تاریخ"><br>
 
-                        <button type="submit" id="save" class="btn btn-primary ledger-submit-btn" style="float: right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">Save Statement</button>
+                        <button type="submit" id="save" class="btn btn-primary ledger-submit-btn" style="float: right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">بیان کو محفوظ کریں۔</button>
                     </div>
                 </div>
             </form>

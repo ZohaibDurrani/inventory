@@ -32,23 +32,23 @@
 
 	<div class="col-lg-10 col-md-10 col-sm-10">
 		<br>
-		<a href="{% url 'sales:invoice_list' %}"><button type="button" id="invoice" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Invoice List</button></a>
+		<a href="{% url 'sales:invoice_list' %}"><button type="button" id="invoice" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">رسید کی فہرست</button></a>
 		<br><br>
 		<div class="content-panel" style="padding: 5px">
 			<div class="row">
 				<div class="col-xs-12 col-md-12">
 					<div>
-						<h2 class="text-center">Invoice</h2>
+						<h2 class="text-center">رسید </h2>
 					</div>
 				</div>
 				<div class="col-xs-12 col-md-12">
 					<hr>
 					<div class="row">
 						<div class="col-xs-6 col-md-6">
-							<div><strong>Billed To:</strong> <span style="float: right" >{{ invoice.created_at.date }}</span></div><br>
+							<div><strong>کو بل دیا گیا۔ :</strong> <span style="float: right" >{{ invoice.created_at.date }}</span></div><br>
 							<div class="existing-customer">
                                 <span class="customererror" style="color: red; display: none">Customer Doesn't exist please add Customer</span>
-                                <input class="form-control customer" id="customer-id" placeholder="Customer" list="customer-list" value="{{ invoice.customer.customer_name }}" disabled>
+                                <input class="form-control customer" id="customer-id" placeholder="صارف" list="customer-list" value="{{ invoice.customer.customer_name }}" disabled>
 <!--                                <datalist id="customer-list">-->
 <!--                                    {% for customer in customers %}-->
 <!--                                        <option data-id="{{ customer.id }}" value="{{ customer.customer_name }}">{{ customer.customer_phone }}</option>-->
@@ -59,7 +59,7 @@
                             </div>
                             <div id="new-customer-form" class="new-customer-form" style="display: none">
                                 <span class="already-error" style="color: red; display: none">This Customer Already exist</span>
-                                <input type="text" class="form-control customer_name" name="customer_name" placeholder="Customer Name"><br>
+                                <input type="text" class="form-control customer_name" name="customer_name" placeholder="صارف"><br>
                                 <input type="number" class="form-control customer_phone" name="customer_phone" placeholder="Customer Phone"><br>
                                 <a class="added-customer" style="cursor: pointer;">Existing Customer</a><br><br>
                             </div>
@@ -74,10 +74,10 @@
 						<table class="table table-bordered">
 							<thead>
 							<tr class="item-row">
-								<th>Item</th>
-								<th>Price</th>
-								<th>Quantity</th>
-								<th>Total</th>
+								<th>آئٹم	</th>
+								<th>قیمت</th>
+								<th>مقدار</th>
+								<th>کل</th>
 							</tr>
 							</thead>
                                 {% for item in invoice.purchased_items.all %}
@@ -109,43 +109,43 @@
 							<tr>
 								<td></td>
 								<td></td>
-								<td class="text-right"><strong>Sub Total</strong></td>
+								<td class="text-right"><strong>ذیلی کل	</strong></td>
 								<td><span id="subtotal">0.00</span></td>
 							</tr>
 							<tr hidden>
-								<td><strong>Total Quantity: </strong><span id="totalQty" style="color: red; font-weight: bold">{{ invoice.qty|floatformat:-2 }}</span> Units</td>
+								<td><strong>کل مقدار  : </strong><span id="totalQty" style="color: red; font-weight: bold">{{ invoice.qty|floatformat:-2 }}</span> Units</td>
 								<td></td>
-								<td class="text-right"><strong>Discount</strong></td>
+								<td class="text-right"><strong>رعایت</strong></td>
 								<td><input class="form-control" id="discount" value="0" type="text"></td>
 							</tr>
 							<tr hidden>
 								<td></td>
 								<td></td>
-								<td class="text-right"><strong>Shipping</strong></td>
+								<td class="text-right"><strong>شپنگ </strong></td>
 								<td><input class="form-control" id="shipping" value="0" type="text"></td>
 							</tr>
 							<tr>
 								<td></td>
 								<td></td>
-								<td class="text-right"><strong>Grand Total</strong></td>
+								<td class="text-right"><strong>مجموعی عدد	</strong></td>
 								<td><span id="grandTotal" style="color:red">0</span></td>
 							</tr>
                             <tr>
 								<td></td>
 								<td></td>
-								<td class="text-right"><strong>Received Amount</strong></td>
+								<td class="text-right"><strong>وصول شدہ رقم	</strong></td>
 								<td><input class="form-control" id="paidAmount" value="{{ invoice.paid_amount|floatformat:-2 }}" type="text"></td>
 							</tr>
                             <tr>
 								<td></td>
 								<td></td>
-								<td class="text-right"><strong>Remaining Amount</strong></td>
+								<td class="text-right"><strong>بقایا رقم	</strong></td>
 								<td><span id="remainingAmount">{{ invoice.remaining_amount|floatformat:-2 }}</span></td>
 							</tr>
 							</tbody>
 						</table>
 					</div>
-					<a id="invoice_update" href="javascript:;" title="Update Invoice" class="btn btn-primary pull-right">Update Invoice</a>
+					<a id="invoice_update" href="javascript:;" title="Update Invoice" class="btn btn-primary pull-right">رسید کو اپ ڈیٹ کریں۔</a>
 				</div>
 			</div>
 		</div>

@@ -4,34 +4,34 @@
 {% block content %}
 <div class="col-md-6">
     <br>
-    <a href="{% url 'ledger:customer_ledger_list' %}"><button type="button" id="back-customer" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Ledger List</button></a>
+    <a href="{% url 'ledger:customer_ledger_list' %}"><button type="button" id="back-customer" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">لسٹ کھاتا  </button></a>
     <br><br><br>
     <div class="content-panel">
-        <h3 class="text-center">{{ request.user.retailer_user.retailer.name }} Customer / Ledger</h3>
+        <h3 class="text-center">{{ request.user.retailer_user.retailer.name }} گاہک / کھاتا</h3>
         <div class="panel-body">
             <form class="form-horizontal add-ledger-form" action="{% url 'ledger:add_new_ledger' %}" method="post" autocomplete="off">
                 <div class="form-group">
                     <div class="col-sm-12">
                         {% csrf_token %}
-                        <label><strong>Customer Name</strong></label>
+                        <label class="pull-right"><strong>گاہک کا نام</strong></label>
                         <span class="customer-existing" style="color: red; display: none" >Customer Already Exisit</span>
                         <span class="customer-error" style="color: red; display: none" >this field is requried</span>
-                        <input type="text" class="form-control customer" name="customer_name" placeholder="Name"><br>
-                        <label><strong>Customer phone</strong></label>
+                        <input type="text" class="form-control customer text-right" name="customer_name" placeholder=" نام"><br>
+                        <label class="pull-right"><strong>کسٹمر فون</strong></label>
                         <span class="customer-phone-error" style="color: red; display: none" >this field is requried</span>
-                        <input type="text" class="form-control customer_phone" name="customer_phone" placeholder="Phone"><br>
-                        <label><strong>Customer Type</strong></label>
+                        <input type="text" class="form-control customer_phone text-right" name="customer_phone" placeholder="فون"><br>
+                        <label class="pull-right"><strong>کسٹمر کی قسم</strong></label>
                         <span class="customer-type-error" style="color: red; display: none" >this field is requried</span>
-                        <input type="text" class="form-control customer_type" name="customer_type" placeholder="Person Type">
-                        <span style="color:#00ccff">For example: Retailer, WholeSale Dealer etc</span><br><br>
-                        <label><strong>Amount</strong></label>
+                        <input type="text" class="form-control customer_type text-right" name="customer_type" placeholder="گاہک کی قسم">
+                        <span style="color:#00ccff" class="pull-right">مثال کے طور پر: خوردہ فروش، ہول سیل ڈیلر وغیرہ</span><br><br>
+                        <label class="pull-right"><strong>رقم</strong></label>
                         <span class="amount-error" style="color: red; display: none" >this field is requried</span>
-                        <input type="text" class="form-control amount" name="amount" placeholder="Amount"><br>
-                        <label><strong>Description</strong></label>
+                        <input type="text" class="form-control amount text-right" name="amount" placeholder="رقم"><br>
+                        <label class="pull-right"><strong>تفصیل</strong></label>
                         <span class="description-error" style="color: red; display: none" >this field is requried</span>
-                        <textarea maxlength="500" rows="4" name="description" class="form-control description"  placeholder ="Description"></textarea> <br>
-                        <input type="hidden" name="retailer" value="{{ request.user.retailer_user.retailer.id }}">
-                        <button type="button" id="save" class="btn btn-primary ledger-submit-btn" style="float: right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">Save Ledger</button>
+                        <textarea maxlength="500" rows="4" name="description" class="form-control description text-right"  placeholder ="تفصیل"></textarea> <br>
+                        <input type="hidden" name="retailer" class="text-right" value="{{ request.user.retailer_user.retailer.id }}">
+                        <button type="button" id="save" class="btn btn-primary ledger-submit-btn" style="float: right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">کھاتا محفوظ کریں۔</button>
                     </div>
                 </div>
             </form>

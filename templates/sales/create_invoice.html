@@ -32,33 +32,33 @@
 
 	<div class="col-lg-12 col-md-12 col-sm-12">
 		<br>
-        <a href="{% url 'sales:invoice_list' %}"><button type="button" id="invoice" class="btn btn-primary"  id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Invoice List</button></a>
+        <a href="{% url 'sales:invoice_list' %}"><button type="button" id="invoice" class="btn btn-primary"  id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">انوائس کی فہرست</button></a>
         <br><br><br>
 		<div class="content-panel" style="padding: 5px">
 			<div class="row" style="font-size: large">
 				<div class="col-xs-12 col-md-12">
 					<div>
-						<h2 class="text-center">Invoice</h2>
+						<h2 class="text-center">رسید</h2>
 					</div>
 				</div>
 				<div class="col-xs-12 col-md-12">
 					<hr>
 					<div class="row">
 						<div class="col-xs-6 col-md-6">
-							<div><strong>Billed To:</strong> <span style="float: right" >29 april 2018</span></div><br>
+							<div><strong>کو بل دیا گیا۔:</strong> <input readonly type="date" style="float: right" id="current-date"></input></div><br>
 							<div class="existing-customer">
-                                <span class="customererror" style="color: red; display: none">Customer Doesn't exist please add Customer</span>
-                                <input class="form-control customer" id="customer-id" placeholder="Customer" list="customer-list" >
+                                <span class="customererror" style="color: red; display: none">کسٹمر موجود نہیں ہے براہ کرم کسٹمر کو شامل کریں۔</span>
+                                <input class="form-control customer" id="customer-id" placeholder="صارف" list="customer-list" >
                                 <datalist id="customer-list">
                                     {% for customer in customers %}
                                         <option data-id="{{ customer.id }}" value="{{ customer.customer_name }}">{{ customer.customer_phone }}</option>
                                     {% endfor %}
                                 </datalist><br>
-                                <a class="new-customer" style="cursor: pointer;">New Customer</a><br>
+                                <a class="new-customer" style="cursor: pointer;">نیا گاہک</a><br>
                                 <br>
                             </div>
                             <div id="new-customer-form" class="new-customer-form" style="display: none">
-                                <span class="already-error" style="color: red; display: none">This Customer Already exist</span>
+                                <span class="already-error" style="color: red; display: none">یہ گاہک پہلے سے موجود ہے</span>
                                 <input type="text" class="form-control customer_name" name="customer_name" placeholder="Customer Name"><br>
                                 <input type="number" class="form-control customer_phone" name="customer_phone" placeholder="Customer Phone"><br>
                                 <a class="added-customer" style="cursor: pointer;">Existing Customer</a><br><br>
@@ -87,9 +87,9 @@
                                         <td><input class="form-control" id="shipping" value="0" type="text"></td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Total Qty: </strong><span id="totalQty" style="color: red; font-weight: bold">0</span></td>
+                                        <td><strong>کل مقدار:  </strong><span id="totalQty" style="color: red; font-weight: bold">0</span></td>
                                         <td></td>
-                                        <td class="text-right"><strong>Grand Total</strong></td>
+                                        <td class="text-right"><strong>مجموعی عدد</strong></td>
                                         <td><span id="grandTotal" style="color:red">0</span></td>
                                     </tr>
                                     <tr>
@@ -98,13 +98,13 @@
                                     <tr>
                                         <td></td>
                                         <td></td>
-                                        <td class="text-right"><strong>Received Amount</strong></td>
+                                        <td class="text-right"><strong>وصول شدہ رقم</strong></td>
                                         <td><input class="form-control" id="paidAmount" value="0" type="text"></td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td></td>
-                                        <td class="text-right"><strong>Remaining Amount</strong></td>
+                                        <td class="text-right"><strong>بقایا رقم</strong></td>
                                         <td><span id="remainingAmount">0</span></td>
                                     </tr>
                                     <tr>
@@ -113,20 +113,20 @@
                                     <tr>
                                         <td></td>
                                         <td></td>
-                                        <td class="text-right"><strong>Cash Payment</strong></td>
+                                        <td class="text-right"><strong>نقد ادائیگی</strong></td>
                                         <td><input class="form-control" id="cash_payment" value="0" type="text"></td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td></td>
-                                        <td class="text-right"><strong>Returned Cash</strong></td>
+                                        <td class="text-right"><strong>کیش واپس کر دیا۔</strong></td>
                                         <td><span id="returned_cash">0</span></td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="col-md-12">
-                                <a style="width: 100%; font-size: large" id="create-invoice" href="javascript:;" title="Create Invoice" class="btn btn-primary pull-right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">Create Invoice</a>
+                                <a style="width: 100%; font-size: large" id="create-invoice" href="javascript:;" title="Create Invoice" class="btn btn-primary pull-right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">انوائس بنائیں</a>
                             </div>
 						</div>
                         <div class="col-xs-6 col-md-6">
@@ -134,17 +134,17 @@
                                 <table class="table table-bordered">
                                     <thead>
                                     <tr class="item-row">
-                                        <th>Item</th>
-                                        <th>Stock</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
+                                        <th>آئٹم</th>
+                                        <th>اسٹاک</th>
+                                        <th>قیمت</th>
+                                        <th>مقدار</th>
+                                        <th>کل</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr id="hiderow">
                                         <td colspan="5">
-                                            <a id="addRow" href="javascript:;" title="Add Item" class="btn btn-primary">Add Item</a> <span class="item-error" style="color: red; display: none">please add Item</span>
+                                            <a id="addRow" href="javascript:;" title="Add Item" class="btn btn-primary">آئٹم شامل کریں۔</a> <span class="item-error" style="color: red; display: none">آئٹم شامل کریں۔</span>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -389,7 +389,8 @@
             if(ex.test(el.value)==false){
                 el.value = el.value.substring(0,el.value.length - 1);
             }
-        }
+        };
+        
     </script>
 <script>
 $('#invoice').on('click', function() {
@@ -399,6 +400,23 @@ $('#invoice').on('click', function() {
        $this.button('reset');
    }, 5000);
 });
+document.getElementById('current-date').value = new Date().toISOString().slice(0, 10);
+
+// function currentDate() {
+//             var today = new Date();
+//             var dd = today.getDate();
+//             var mm = today.getMonth()+1; //January is 0!
+//             var yyyy = today.getFullYear();
+//             if(dd<10) {
+//                 dd='0'+dd
+//             }
+//             if(mm<10) {
+//                 mm='0'+mm
+//             }
+//             today = mm+'/'+dd+'/'+yyyy;
+//             console.log(today);
+//             document.getElementById("current-date").innerHTML = "today";
+//         }
 
     </script>
 {% endblock %}

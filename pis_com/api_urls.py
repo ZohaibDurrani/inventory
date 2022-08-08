@@ -1,10 +1,10 @@
-from django.urls import re_path
+from django.urls import path
 
 
-from pis_com.api_views import DailySalesAPI, WeeklySalesAPI, MonthlySalesAPI
+from pis_com.api_views import *
 
 urlpatterns = [
-    re_path(r'^sales/daily/$', DailySalesAPI.as_view(),name='daily_sales_api'),
-    re_path(r'^sales/weekly/$', WeeklySalesAPI.as_view(),name='weekly_sales_api'),
-    re_path(r'^sales/monthly/$', MonthlySalesAPI.as_view(),name='monthly_sales_api'),
+    path("api/sales/daily/", daily_sales_api,name='daily_sales_api'),
+    # re_path(r'^sales/weekly/$', WeeklySalesAPI.as_view(),name='weekly_sales_api'),
+    # re_path(r'^sales/monthly/$', MonthlySalesAPI.as_view(),name='monthly_sales_api'),
 ]

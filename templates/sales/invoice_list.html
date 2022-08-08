@@ -96,11 +96,12 @@ $('#invoice').on('click', function() {
 </script>
 <script>
     function deleteFunction(e) {
-            if(!confirm("Are you sure you want to delete?")){
-                e.preventDefault();
-            }else{
-             $('.delete').submit();
+            if (!confirm("آپ کو متمایل ہیں کہ آپ کو انتظار فائل کو حذف کرنا چاہتے ہیں؟"))
+                {e.preventDefault();}
+            else{
+                return true;
             }
+            
         }
 </script>
 

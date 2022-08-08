@@ -1,5 +1,6 @@
 import json
 import datetime
+from rest_framework.decorators import api_view
 
 from calendar import monthrange
 from django.utils import timezone
@@ -11,11 +12,8 @@ from django.db.models import Sum
 
 from pis_product.models import StockOut
 
-
-class DailySalesAPI(View):
-
-    @staticmethod
-    def sales_data(obj, stockout=None, date=None, week_date=None, month_date=None):
+def sales_data(obj, stockout=None, date=None, week_date=None, month_date=None):
+        print('sales_data')
         sales = obj.aggregate(
             total_sales=Sum('grand_total')
         )
@@ -55,18 +53,22 @@ class DailySalesAPI(View):
             data.update({
                 'date': date.strftime('%d-%b-%Y')
             })
+        print(data)
         return data
 
-    def get(self, request, *args, **kwargs):
+
+@api_view(['GET'])
+def daily_sales_api(request):
+        print('daily_sales_api')
         sales = []
         for day in range(12):
             sales_day = timezone.now() - relativedelta(days=day)
             retailer_sales = (
-                self.request.user.retailer_user.retailer.
+                request.user.retailer_user.retailer.
                 retailer_sales.filter(created_at__icontains=sales_day.date())
             )
 
-            retailer_products = (self.request.user.retailer_user.retailer.
+            retailer_products = (request.user.retailer_user.retailer.
                     retailer_product.all().values_list('id', flat=True))
 
             stockout = StockOut.objects.filter(
@@ -74,88 +76,162 @@ class DailySalesAPI(View):
                 product__in=retailer_products
             )
 
-            data = self.sales_data(
+            data = sales_data(
                 obj=retailer_sales, stockout=stockout, date=sales_day
             )
             sales.append(data)
-
+        print(sales)
         return JsonResponse(
             {'sales_data': sales}
         )
 
 
-class WeeklySalesAPI(DailySalesAPI):
+# class DailySalesAPI(View):
 
-    def get(self, request, *args, **kwargs):
-        sales = []
-        for week in xrange(1, 13):
-            sales_start_week = timezone.now() - relativedelta(weeks=week)
-            sales_end_week = timezone.now() - relativedelta(weeks=week - 1)
+#     @staticmethod
+#     def sales_data(obj, stockout=None, date=None, week_date=None, month_date=None):
+#         print('sales_data')
+#         sales = obj.aggregate(
+#             total_sales=Sum('grand_total')
+#         )
 
-            retailer_sales = (
-                self.request.user.retailer_user.retailer.retailer_sales.filter(
-                    created_at__gte=sales_start_week,
-                    created_at__lt=sales_end_week
-                )
-            )
-            retailer_products = (self.request.user.retailer_user.retailer.
-                                 retailer_product.all().values_list('id',
-                                                                    flat=True))
+#         data = {
+#             'sales': (
+#                 int(sales.get('total_sales')) if
+#                 sales.get('total_sales') else 0
+#             ),
+#         }
 
-            stockout = StockOut.objects.filter(
-                dated__gte=sales_start_week,
-                dated__lt=sales_end_week,
-                product__in=retailer_products
-            )
-            data = self.sales_data(
-                obj=retailer_sales, stockout=stockout, week_date=sales_end_week
-            )
-            sales.append(data)
+#         profit = 0
+#         if stockout:
+#             try:
+#                 selling_amount = stockout.aggregate(selling_amount=Sum('selling_price'))
+#                 buying_amount = stockout.aggregate(buying_amount=Sum('buying_price'))
+#                 selling_amount = selling_amount.get('selling_amount') or 0
+#                 buying_amount = buying_amount.get('buying_amount') or 0
+#             except:
+#                 selling_amount = 0
+#                 buying_amount = 0
 
-        return JsonResponse(
-            {'sales_data': sales}
-        )
+#             profit = float(selling_amount) - float(buying_amount)
+#         data.update({
+#             'profit': profit
+#         })
+
+#         if week_date:
+#             data.update({
+#                 'date': week_date.strftime('%a %d, %b')
+#             })
+#         elif month_date:
+#             data.update({
+#                 'day': month_date.strftime('%b')
+#             })
+#         else:
+#             data.update({
+#                 'date': date.strftime('%d-%b-%Y')
+#             })
+#         print(data)
+#         return data
+
+#     def get(self, request, *args, **kwargs):
+#         sales = []
+#         for day in range(12):
+#             sales_day = timezone.now() - relativedelta(days=day)
+#             retailer_sales = (
+#                 self.request.user.retailer_user.retailer.
+#                 retailer_sales.filter(created_at__icontains=sales_day.date())
+#             )
+
+#             retailer_products = (self.request.user.retailer_user.retailer.
+#                     retailer_product.all().values_list('id', flat=True))
+
+#             stockout = StockOut.objects.filter(
+#                 dated__icontains=sales_day.date(),
+#                 product__in=retailer_products
+#             )
+
+#             data = self.sales_data(
+#                 obj=retailer_sales, stockout=stockout, date=sales_day
+#             )
+#             sales.append(data)
+#         print(sales)
+#         return JsonResponse(
+#             {'sales_data': sales}
+#         )
 
 
-class MonthlySalesAPI(DailySalesAPI):
-    def get(self, request, *args, **kwargs):
-        sales = []
+# class WeeklySalesAPI(DailySalesAPI):
 
-        for month in range(12):
-            date_month = timezone.now() - relativedelta(months=month)
-            month_range = monthrange(
-                date_month.year, date_month.month
-            )
-            start_month = datetime.datetime(
-                date_month.year, date_month.month, 1)
+#     def get(self, request, *args, **kwargs):
+#         sales = []
+#         for week in range(1, 13):
+#             sales_start_week = timezone.now() - relativedelta(weeks=week)
+#             sales_end_week = timezone.now() - relativedelta(weeks=week - 1)
 
-            end_month = datetime.datetime(
-                date_month.year, date_month.month, month_range[1]
-            )
+#             retailer_sales = (
+#                 self.request.user.retailer_user.retailer.retailer_sales.filter(
+#                     created_at__gte=sales_start_week,
+#                     created_at__lt=sales_end_week
+#                 )
+#             )
+#             retailer_products = (self.request.user.retailer_user.retailer.
+#                                  retailer_product.all().values_list('id',
+#                                                                     flat=True))
 
-            retailer_sales = (
-                self.request.user.retailer_user.retailer.retailer_sales.filter(
-                    created_at__gte=start_month,
-                    created_at__lt=end_month.replace(
-                        hour=23, minute=59, second=59)
-                )
-            )
+#             stockout = StockOut.objects.filter(
+#                 dated__gte=sales_start_week,
+#                 dated__lt=sales_end_week,
+#                 product__in=retailer_products
+#             )
+#             data = self.sales_data(
+#                 obj=retailer_sales, stockout=stockout, week_date=sales_end_week
+#             )
+#             sales.append(data)
 
-            retailer_products = (self.request.user.retailer_user.retailer.
-                                 retailer_product.all().values_list('id',
-                                                                    flat=True))
-            stockout = StockOut.objects.filter(
-                dated__gte=start_month,
-                dated__lt=end_month.replace(
-                        hour=23, minute=59, second=59),
-                product__in=retailer_products
-            )
+#         return JsonResponse(
+#             {'sales_data': sales}
+#         )
 
-            data = self.sales_data(
-                obj=retailer_sales, stockout=stockout, month_date=end_month
-            )
-            sales.append(data)
 
-        return JsonResponse(
-            {'sales_data': sales}
-        )
+# class MonthlySalesAPI(DailySalesAPI):
+#     def get(self, request, *args, **kwargs):
+#         sales = []
+
+#         for month in range(12):
+#             date_month = timezone.now() - relativedelta(months=month)
+#             month_range = monthrange(
+#                 date_month.year, date_month.month
+#             )
+#             start_month = datetime.datetime(
+#                 date_month.year, date_month.month, 1)
+
+#             end_month = datetime.datetime(
+#                 date_month.year, date_month.month, month_range[1]
+#             )
+
+#             retailer_sales = (
+#                 self.request.user.retailer_user.retailer.retailer_sales.filter(
+#                     created_at__gte=start_month,
+#                     created_at__lt=end_month.replace(
+#                         hour=23, minute=59, second=59)
+#                 )
+#             )
+
+#             retailer_products = (self.request.user.retailer_user.retailer.
+#                                  retailer_product.all().values_list('id',
+#                                                                     flat=True))
+#             stockout = StockOut.objects.filter(
+#                 dated__gte=start_month,
+#                 dated__lt=end_month.replace(
+#                         hour=23, minute=59, second=59),
+#                 product__in=retailer_products
+#             )
+
+#             data = self.sales_data(
+#                 obj=retailer_sales, stockout=stockout, month_date=end_month
+#             )
+#             sales.append(data)
+
+#         return JsonResponse(
+#             {'sales_data': sales}
+#         )

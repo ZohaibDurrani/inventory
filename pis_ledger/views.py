@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from http.client import HTTPResponse
 from django.views.generic import FormView, TemplateView
 from django.http import HttpResponseRedirect
 from django.db.models import Sum
 from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
-
+from django.shortcuts import render, redirect
 from pis_com.models import Customer
 from pis_com.forms import CustomerForm
 from pis_ledger.forms import LedgerForm
@@ -250,3 +251,16 @@ class AddPayment(FormView):
             'customer': customer
         })
         return context
+
+
+def updateLedgers(request):
+    if request.method=="GET":
+        id=request.GET.get('id')
+        print("asdkfjasdjkf",id)
+        ledgers=Ledger.objects.filter(customer__id=id).get()
+        return render(request, 'ledger/updateLedgers.html', {'ledgers': ledgers})
+    elif request.method=="POST":
+        id=request.POST.get('ledgers_id')
+        amount=request.POST.get('amount')
+        Ledger.objects.filter(id=id).update(amount=amount)
+        return HttpResponseRedirect(reverse("ledger:customer_ledger_list"))

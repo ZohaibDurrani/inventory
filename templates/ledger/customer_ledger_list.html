@@ -57,6 +57,8 @@
                         <a href="{% url 'ledger:customer_ledger_detail' customer_id=customer_ledger.id %}"><button
                                 class="btn btn-success btn-xs" title="Customer Ledger Detail"><i
                                     class="fa fa-eye"></i></button></a>
+                        <a href="/ledger/updateLedgers/?id={{customer_ledger.id}}"><button class="btn btn-success btn-xs"><i class="fa fa-edit"></i></button></a>
+
                     </td>
                     <td>{{ customer_ledger.remaining_ledger|floatformat:-2 }}</td>
 

@@ -65,9 +65,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="{% static 'js/highcharts.js' %}"></script>
 
-    <link rel="shortcut icon" href="{% static 'js/assets/images/favicon.ico' %}">
+    <link rel="shortcut icon" href="{% static 'js/assets/images/favicon.ico">
 
-    <link href="{% static 'js/assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- <link href="{% static 'js/assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" /> -->
     <link href="{% static 'js/assets/css/icons.css' %}" rel="stylesheet" type="text/css" />
     <link href="{% static 'js/assets/css/style.css' %}" rel="stylesheet" type="text/css" />
 
@@ -84,6 +84,7 @@
             <div class="nav notify-row" id="top_menu">
                 {% product_notifications retailer_id=request.user.retailer_user.retailer.id as p_n %}
                 <ul class="nav top-menu">
+                    
                     <li id="header_inbox_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle msg" href="index.html#">
                             <i class="fa fa-envelope-o"></i> <span class="badge badge-danger notification_count" style="background: #d9534f"></span>
@@ -122,6 +123,7 @@
             <div class="top-menu">
                 <a tabindex="logout" class="btn btn-primary" href="{% url 'logout' %}" style="margin-top: 12px;">Logout</a>
             </div>
+            
         </div>
     </header>
     <section class="wrapper">

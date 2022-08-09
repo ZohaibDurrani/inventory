@@ -4,25 +4,25 @@
 {% block content %}
 <div class="col-md-6">
     <br>
-    <a href="{% url 'product:item_details' pk=product.id %}"><button type="button" id="back-customer" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Product Item List</button></a>
+    <a href="{% url 'product:item_details' pk=product.id %}"><button type="button" id="back-customer" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">مصنوعات کی اشیاء کی فہرست</button></a>
     <br><br><br>
     <div class="content-panel">
-        <h3 class="text-center">{{ request.user.retailer_user.retailer.name }} | Product ({{ product.name }})</h3>
+        <h3 class="text-center">{{ request.user.retailer_user.retailer.name }} | مصنوعات ({{ product.name }})</h3>
         <div class="panel-body">
             <form class="form-horizontal product_item_form" action="{% url 'product:add_product_items' product_id=product.id %}" method="post" autocomplete="off">
                 <div class="form-group">
                     <div class="col-sm-12">
                         {% csrf_token %}
-                        <label><strong>Consumer Price</strong></label>
-                        <span class="consumer-error" style="color:red; display:none">This field is required..</span>
-                        <input type="text" class="form-control consumer_price" name="consumer_price" onkeyup="checkDec(this);" placeholder="Consumer Price"><br>
-                        <label><strong>Quantity Item</strong></label>
-                        <span class="item-error" style="color:red; display:none">This field is required..</span>
-                        <input type="text"  class="form-control Quantity_item"  name="available_item"  onkeyup="checkDec(this);" placeholder="Item Quantity"><br>
+                        <label class="pull-right"><strong>صارفین کی قیمت</strong></label>
+                        <span class="consumer-error" style="color:red; display:none">اس کو پر کرنا ضروری ہے</span>
+                        <input type="text" class="form-control consumer_price" style="text-align: right;" name="consumer_price" onkeyup="checkDec(this);" placeholder="صارفین کی قیمت"><br>
+                        <label class="pull-right"><strong>اشیاء کی مقدار</strong></label>
+                        <span class="item-error" style="color:red; display:none">اس کو پر کرنا ضروری ہے</span>
+                        <input type="text"  class="form-control Quantity_item" style="text-align: right;" name="available_item"  onkeyup="checkDec(this);" placeholder="اشیاء کی مقدار"><br>
                         <input type="hidden" name="purchased_item" value="0">
                         <input type="hidden" name="product" value="{{ product.id }}">
                         <input type="hidden" name="retail_price" value="0">
-                        <button type="button" class="btn btn-primary product-sub-btn" style="float: right">Save Product</button>
+                        <button type="button" class="btn btn-primary product-sub-btn pull-left" style="float: right">فراہم کنندہ کو محفوظ کریں۔</button>
                     </div>
                 </div>
             </form>

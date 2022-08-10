@@ -9,16 +9,16 @@ from pis_com.models import DatedModel
 
 
 class Product(models.Model):
-    UNIT_TYPE_KG = 'Kilogram'
-    UNIT_TYPE_GRAM = 'Gram'
-    UNIT_TYPE_LITRE = 'Litre'
-    UNIT_TYPE_QUANTITY = 'Quantity'
+    UNIT_TYPE_KG = "کلو گرام"
+    UNIT_TYPE_GRAM = "گرام"
+    UNIT_TYPE_LITRE = "پارسل"
+    UNIT_TYPE_QUANTITY = "مقدار"
 
     UNIT_TYPES = (
-        (UNIT_TYPE_KG, 'Kilogram'),
-        (UNIT_TYPE_GRAM, 'Gram'),
-        (UNIT_TYPE_LITRE, 'Litre'),
-        (UNIT_TYPE_QUANTITY, 'Quantity'),
+        (UNIT_TYPE_KG, "کلو گرام"),
+        (UNIT_TYPE_GRAM, "گرام"),
+        (UNIT_TYPE_LITRE, "پارسل"),
+        (UNIT_TYPE_QUANTITY, "مقدار"),
     )
     unit_type = models.CharField(
         choices=UNIT_TYPES, default=UNIT_TYPE_QUANTITY,

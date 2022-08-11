@@ -2,6 +2,14 @@
 {% block menu_ledger %}active{% endblock %}
 {% block submenu_customer_ledger %}active{% endblock %}
 {% block content %}
+
+
+<style>
+    .required:after {
+    content:" *";
+    color: red;
+  }
+</style>
 <div class="col-md-6">
     <br>
     <a href="{% url 'ledger:customer_ledger_list'%}"><button type="button" id="back-customer" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">لسٹ کھاتا  </button></a>
@@ -13,14 +21,16 @@
                 <div class="form-group">
                     <div class="col-sm-12">
                         {% csrf_token %}
-                        <label class="pull-right"><strong>ادائیگی کی رقم</strong></label>
-                        <span class="amount-error" style="color: red; display: none" >This Field is Requried</span>
-                        <input type="text" class="form-control amount text-right" name="payment" placeholder="ادائیگی کی رقم    "><br>
+                        <label class="pull-right required"><strong>ادائیگی کی رقم</strong></label>
+                        <span class="amount-error" style="color: red; display: none" >اس کو پر کرنا ضروری ہے</span>
+                        <input type="text" class="form-control amount text-right" name="payment" placeholder="ادائیگی کی رقم" required>
+                        <span class="pull-right" style="color: #ff0000;">خالی نہ چھوڑیں کم از کم 0 ڈالیں۔</span><br><br>
+
                         <label class="pull-right"><strong>تاریخ</strong></label>
-                        <span class="date-error" style="color: red; display: none" >This Field is Requried</span>
+                        <span class="date-error" style="color: red; display: none" >اس کو پر کرنا ضروری ہے</span>
                         <input type="date" class="form-control date text-right" name="dated"><br>
-                        <label class="pull-right"><strong>تفصیل</strong></label>
-                        <span class="description-error" style="color: red; display: none" >This Field is Requried</span>
+                        <label class="pull-right required"><strong>تفصیل</strong></label>
+                        <span class="description-error" style="color: red; display: none" >اس کو پر کرنا ضروری ہے</span>
                         <textarea maxlength="500" rows="4" name="description" class=" text-right form-control description"  placeholder ="تفصیل"></textarea> <br>
                         <input type="hidden" name="customer" value="{{ customer.id }}">
                         <input type="hidden" name="retailer" value="{{ request.user.retailer_user.retailer.id }}">

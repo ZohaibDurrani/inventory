@@ -2,6 +2,13 @@
 {% block submenu_add_new_ledger %}active{% endblock %}
 {% block menu_ledger %}active{% endblock %}
 {% block content %}
+
+<style>
+    .required:after {
+    content:" *";
+    color: red;
+  }
+</style>
 <div class="col-md-6">
     <br>
     <a href="{% url 'ledger:customer_ledger_list' %}"><button type="button" id="back-customer" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">لسٹ کھاتا  </button></a>
@@ -14,21 +21,25 @@
                     <div class="col-sm-12">
                         {% csrf_token %}
                         <label class="pull-right"><strong>گاہک کا نام</strong></label>
-                        <span class="customer-existing" style="color: red; display: none" >Customer Already Exisit</span>
-                        <span class="customer-error" style="color: red; display: none" >this field is requried</span>
+                        <span class="customer-existing" style="color: red; display: none" >کسٹمر پہلے سے موجود ہے</span>
+                        <span class="customer-error" style="color: red; display: none" >اس کو پر کرنا ضروری ہے</span>
                         <input type="text" class="form-control customer text-right" name="customer_name" placeholder=" نام"><br>
                         <label class="pull-right"><strong>کسٹمر فون</strong></label>
-                        <span class="customer-phone-error" style="color: red; display: none" >this field is requried</span>
-                        <input type="text" class="form-control customer_phone text-right" name="customer_phone" placeholder="فون"><br>
+                        <span class="customer-phone-error" style="color: red; display: none" >اس کو پر کرنا ضروری ہے</span>
+                        <input type="text" class="form-control customer_phone text-right" name="customer_phone" placeholder="فون">
+                        <span class="pull-right" style="color: #ff0000;">خالی چھوڑیں لیکن صرف 0 نہ ڈالیں یا 0321 جیسے دوسرے ہندسے شامل کریں۔</span><br><br>
+
                         <label class="pull-right"><strong>کسٹمر کی قسم</strong></label>
-                        <span class="customer-type-error" style="color: red; display: none" >this field is requried</span>
+                        <span class="customer-type-error" style="color: red; display: none" >اس کو پر کرنا ضروری ہے</span>
                         <input type="text" class="form-control customer_type text-right" name="customer_type" placeholder="گاہک کی قسم">
-                        <span style="color:#00ccff" class="pull-right">مثال کے طور پر: خوردہ فروش، ہول سیل ڈیلر وغیرہ</span><br><br>
-                        <label class="pull-right"><strong>رقم</strong></label>
-                        <span class="amount-error" style="color: red; display: none" >this field is requried</span>
-                        <input type="text" class="form-control amount text-right" name="amount" placeholder="رقم"><br>
-                        <label class="pull-right"><strong>تفصیل</strong></label>
-                        <span class="description-error" style="color: red; display: none" >this field is requried</span>
+                        <span style="color:#ff0000" class="pull-right">مثال کے طور پر: خوردہ فروش، ہول سیل ڈیلر وغیرہ</span><br><br>
+                        <label class="pull-right required"><strong>رقم</strong></label>
+                        <span class="amount-error" style="color: red; display: none" >اس کو پر کرنا ضروری ہے</span>
+                        <input type="text" class="form-control amount text-right" name="amount" placeholder="رقم" required>
+                        <span class="pull-right" style="color: #ff0000;">خالی نہ چھوڑیں کم از کم 0 ڈالیں۔</span><br><br>
+
+                        <label class="pull-right required"><strong>تفصیل</strong></label>
+                        <span class="description-error" style="color: red; display: none" >اس کو پر کرنا ضروری ہے</span>
                         <textarea maxlength="500" rows="4" name="description" class="form-control description text-right"  placeholder ="تفصیل"></textarea> <br>
                         <input type="hidden" name="retailer" class="text-right" value="{{ request.user.retailer_user.retailer.id }}">
                         <button type="button" id="save" class="btn btn-primary ledger-submit-btn" style="float: right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">کھاتا محفوظ کریں۔</button>

@@ -14,16 +14,18 @@
                     <div class="col-sm-12">
                         {% csrf_token %}
                         <label class="pull-right"><strong>نام</strong></label>
-                        <span class="name-error" style="color: red; display: none" >this field is requried</span>
+                        <span class="name-error" style="color: red; display: none" >اس کو پر کرنا ضروری ہے</span>
                         <input type="text" class="form-control name text-right" name="name" placeholder="نام"><br>
                         <label class="pull-right"><strong>پتہ</strong></label>
-                        <span class="father_name-error" style="color: red; display: none" >this field is requried</span>
+                        <span class="father_name-error" style="color: red; display: none" >اس کو پر کرنا ضروری ہے</span>
                         <input type="text" class="form-control father_name text-right" name="address" placeholder="پتہ"><br>
                         <label class="pull-right"><strong>فون نمبر</strong></label>
-                        <span class="mobile-error" style="color: red; display: none" >this field is requried</span>
-                        <input type="text" class="form-control mobile text-right" name="phone" placeholder="فون نمبر"><br>
+                        <span class="mobile-error" style="color: red; display: none" >اس کو پر کرنا ضروری ہے</span>
+                        <input type="text" class="form-control mobile text-right" name="phone" placeholder="فون نمبر">
+                        <span class="pull-right" style="color: #ff0000;">خالی چھوڑیں لیکن صرف 0 نہ ڈالیں یا 0321 جیسے دوسرے ہندسے شامل کریں۔</span><br><br>
                         <label class="pull-right"><strong>موبائل نمبر</strong></label>
-                        <input type="text" class="form-control mobile text-right" name="mobile_no" placeholder="موبائل نمبر"><br>
+                        <input type="text" class="form-control mobile text-right" name="mobile_no" placeholder="موبائل نمبر">
+                        <span class="pull-right" style="color: #ff0000;">خالی چھوڑیں لیکن صرف 0 نہ ڈالیں یا 0321 جیسے دوسرے ہندسے شامل کریں۔</span><br><br>
 
                         <button type="submit" id="save" class="btn btn-primary ledger-submit-btn" style="float: right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">فراہم کنندہ کو محفوظ کریں۔</button>
                     </div>

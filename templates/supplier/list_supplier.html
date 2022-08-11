@@ -44,7 +44,7 @@
                     {% for supplier in object_list %}
                     <tr>
                         <td>
-                            {#                            <a href="#"><button class="btn btn-danger btn-xs" title="Delete"><i class="fa  fa-trash-o"></i></button></a>#}
+                            <a href="/supplier/deleteSupplier/?id={{supplier.id}}"><button class="confirm-delete btn btn-danger btn-xs" title="Delete"><i class="fa  fa-trash"></i></button></a>
                             <a href="{% url 'supplier:list_supplier_statement' pk=supplier.id %}"><button class="btn btn-success btn-xs" title="All Statements"><i class="fa  fa-info"></i></button></a>
                             {#                            <a href="#"><button class="btn btn-info btn-xs"><i class="fa fa-bar-chart-o"></i></button></a>#}
                         </td>
@@ -72,6 +72,9 @@
      window.print();
      document.body.innerHTML = originalContents;
  }
+ $(document).on('click', '.confirm-delete', function(){
+    return confirm('Are you sure you want to delete this?');
+})
 </script>
 
 {% endblock %}

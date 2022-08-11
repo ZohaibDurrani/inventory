@@ -193,3 +193,19 @@ class StatementPayment(FormView):
             'supplier': supplier
         })
         return context
+
+def deleteSupplier(request):
+    if request.method == 'GET':
+        supplier = Supplier.objects.get(id=request.GET.get('id'))
+        supplier.delete()
+        return HttpResponseRedirect(reverse('supplier:list_supplier'))
+    # if request.method=="GET":
+    #     id=request.GET.get('id')
+    #     print("asdkfjasdjkf",id)
+    #     ledgers=Ledger.objects.filter(customer__id=id).get()
+    #     return render(request, 'ledger/updateLedgers.html', {'ledgers': ledgers})
+    # elif request.method=="POST":
+    #     id=request.POST.get('ledgers_id')
+    #     amount=request.POST.get('amount')
+    #     Ledger.objects.filter(id=id).update(amount=amount)
+    #     return HttpResponseRedirect(reverse("ledger:customer_ledger_list"))

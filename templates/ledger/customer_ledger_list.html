@@ -54,6 +54,7 @@
                 <tr>
 
                     <td>
+                        <a href="/ledger/deletecustomerledger/?id={{customer_ledger.id}}"><button class="confirm-delete btn btn-danger btn-xs" title="Delete"><i class="fa  fa-trash"></i></button></a>
                         <a href="{% url 'ledger:customer_ledger_detail' customer_id=customer_ledger.id %}"><button
                                 class="btn btn-success btn-xs" title="Customer Ledger Detail"><i
                                     class="fa fa-eye"></i></button></a>
@@ -102,6 +103,9 @@
             $this.button('reset');
         }, 5000);
     });
+    $(document).on('click', '.confirm-delete', function(){
+    return confirm('Are you sure you want to delete this?');
+})
 
 </script>
 {% endblock %}

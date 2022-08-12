@@ -37,6 +37,7 @@
                                 <th class="text-center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></th>
                             </tr> -->
                             <tr>
+                                <th class="text-center">اعمال</th>
                                 <th class="text-center">تفصیل</th>
                                 <th class="text-center">رسید</th>
                                 <th class="text-center">ادائیگی کی رقم</th>
@@ -47,6 +48,9 @@
                             <tbody class="item-table-body text-center">
                             {% for ledger in ledgers %}
                             <tr>
+                                <td>
+                                    <a href="/ledger/deleteledgerdetails/?id={{ledger.id}}"><button class="confirm-delete btn btn-danger btn-xs" title="Delete"><i class="fa  fa-trash"></i></button></a>
+                                </td>
                                 <td>{{ ledger.description }}</td>
                                 <td>{{ ledger.invoice.receipt_no }}</td>
                                 <td>{{ ledger.payment|floatformat:-2}}</td>
@@ -83,5 +87,8 @@ $('#do-pay').on('click', function() {
        $this.button('reset');
    }, 5000);
 });
+$(document).on('click', '.confirm-delete', function(){
+    return confirm('Are you sure you want to delete this?');
+})
     </script>
 {% endblock %}

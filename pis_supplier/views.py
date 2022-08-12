@@ -209,3 +209,9 @@ def deleteSupplier(request):
     #     amount=request.POST.get('amount')
     #     Ledger.objects.filter(id=id).update(amount=amount)
     #     return HttpResponseRedirect(reverse("ledger:customer_ledger_list"))
+
+def deleteSupplierstatement(request):
+    if request.method == 'GET':
+        supplierstatement = SupplierStatement.objects.get(id=request.GET.get('id'))
+        supplierstatement.delete()
+        return HttpResponseRedirect(reverse('supplier:list_supplier_statement',kwargs={'pk':supplierstatement.supplier.id}))

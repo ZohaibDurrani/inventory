@@ -12,6 +12,7 @@ from pis_com.models import Customer
 from pis_com.forms import CustomerForm
 from pis_ledger.forms import LedgerForm
 from  pis_ledger.forms import Ledger
+from pis_com.models import Customer
 
 
 class AddNewLedger(FormView):
@@ -256,11 +257,28 @@ class AddPayment(FormView):
 def updateLedgers(request):
     if request.method=="GET":
         id=request.GET.get('id')
-        print("asdkfjasdjkf",id)
+        # print("asdkfjasdjkf",id)
         ledgers=Ledger.objects.filter(customer__id=id).get()
         return render(request, 'ledger/updateLedgers.html', {'ledgers': ledgers})
     elif request.method=="POST":
         id=request.POST.get('ledgers_id')
         amount=request.POST.get('amount')
         Ledger.objects.filter(id=id).update(amount=amount)
+        return HttpResponseRedirect(reverse("ledger:customer_ledger_list"))
+
+def deletecustomerledger(request):
+    if request.method=="GET":
+        id=request.GET.get('id')
+        # print("asdkfjasdjkf",id)
+        Ledger.objects.filter(customer__id=id).delete()
+        Customer.objects.filter(id=id).delete()
+        # ledgers.delete()
+        # print("asdkfjasdjkf",ledgers)
+        return HttpResponseRedirect(reverse("ledger:customer_ledger_list"))
+
+def deleteledgerdetails(request):
+    if request.method=="GET":
+        id=request.GET.get('id')
+        # print("asdkfjasdjkf",id)
+        Ledger.objects.filter(id=id).delete()
         return HttpResponseRedirect(reverse("ledger:customer_ledger_list"))

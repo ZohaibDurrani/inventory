@@ -447,3 +447,11 @@ class StockInUpdateView(UpdateView):
     
     def form_invalid(self, form):
         return super(StockInUpdateView, self).form_invalid(form)
+
+def deletestockout(request):
+    stockout = StockOut.objects.get(id=request.GET.get('id'))
+    stockout.delete()
+    return HttpResponseRedirect(
+        reverse('product:stockout_list',
+                kwargs={'product_id': stockout.product.id})
+    )

@@ -61,6 +61,7 @@
                     {% for statement in object_list %}
                     <tr>
                         <td>
+                            <a href="/supplier/deleteSupplierstatement/?id={{statement.id}}"><button class="confirm-delete btn btn-danger btn-xs" title="Delete"><i class="fa  fa-trash"></i></button></a>
                             <a href="{% url 'supplier:update_supplier_statement' pk=statement.id %}"><button class="btn btn-warning btn-xs" title="Edit"><i class="fa  fa-edit"></i></button></a>
                         </td>
                         <td>{{ statement.date }}</td>
@@ -88,5 +89,8 @@
      window.print();
      document.body.innerHTML = originalContents;
  }
+ $(document).on('click', '.confirm-delete', function(){
+    return confirm('Are you sure you want to delete this?');
+})
 </script>
 {% endblock %}

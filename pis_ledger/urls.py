@@ -3,7 +3,7 @@ from django.urls import re_path,path
 
 from pis_ledger.views import (
     CustomerLedgerView, AddNewLedger, AddLedger,
-    CustomerLedgerDetailsView,AddPayment, updateLedgers
+    CustomerLedgerDetailsView,AddPayment, updateLedgers,deletecustomerledger,deleteledgerdetails
 )
 
 urlpatterns = [
@@ -13,4 +13,6 @@ urlpatterns = [
     re_path(r'^add/customer/(?P<customer_id>\d+)/payment/$',AddPayment.as_view(),name='add_payment'),
     re_path(r'^customer/(?P<customer_id>\d+)/ledger/details/$',CustomerLedgerDetailsView.as_view(),name='customer_ledger_detail'),
     re_path(r"updateLedgers/",updateLedgers,name="updateLedgers"),
+    re_path(r'deletecustomerledger/',deletecustomerledger,name='deletecustomerledger'),
+    re_path(r'deleteledgerdetails/',deleteledgerdetails,name='deleteledgerdetails'),
 ]

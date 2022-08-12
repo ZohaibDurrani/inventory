@@ -215,3 +215,33 @@ def deleteSupplierstatement(request):
         supplierstatement = SupplierStatement.objects.get(id=request.GET.get('id'))
         supplierstatement.delete()
         return HttpResponseRedirect(reverse('supplier:list_supplier_statement',kwargs={'pk':supplierstatement.supplier.id}))
+
+
+class UpdateSupplierForm(UpdateView):
+    template_name = 'supplier/update_add_supplier.html'
+    model = Supplier
+    form_class = SupplierForm
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('login'))
+        return super(
+            UpdateSupplierForm, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        obj = form.save()
+        return HttpResponseRedirect(reverse('supplier:list_supplier'))
+
+    def form_invalid(self, form):
+        return super(UpdateSupplierForm, self).form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateSupplierForm, self).get_context_data(**kwargs)
+        supplier = (
+            Supplier.objects.get(id=self.kwargs.get('pk'))
+        )
+        context.update({
+            'supplier': supplier
+        })
+        return context
+

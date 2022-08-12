@@ -1,7 +1,7 @@
-from django.urls import re_path
+from django.urls import re_path, path
 from pis_supplier.views import(
     AddSupplier, SupplierList, SupplierStatementList, AddSupplierStatement,
-    SupplierStatementUpdate,StatementPayment,deleteSupplier,deleteSupplierstatement)
+    SupplierStatementUpdate,StatementPayment,deleteSupplier,deleteSupplierstatement, UpdateSupplierForm)
 
 
 urlpatterns = [
@@ -13,5 +13,5 @@ urlpatterns = [
     re_path(r'^update/statements/(?P<pk>\d+)/$',SupplierStatementUpdate.as_view(),name='update_supplier_statement'),
     re_path(r"deleteSupplier/",deleteSupplier,name="deleteSupplier"),
     re_path(r'deleteSupplierstatement/',deleteSupplierstatement,name='deleteSupplierstatement'),
-
+    path('update/supplier/<int:pk>', UpdateSupplierForm.as_view(), name='updatesupplier'),
 ]

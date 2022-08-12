@@ -7,7 +7,7 @@
     <a href="{% url 'supplier:list_supplier' %}"><button type="button" id="empolyee" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">سپلائر کی فہرست</button></a>
     <br><br><br>
     <div class="content-panel">
-        <h3 class="text-center"> {{supplier.name}} |سپلائر فارم کو اپ ڈیٹ کریں۔</h3>
+        <h3 class="text-center"> {{supplier.name}} | کو اپ ڈیٹ کریں۔</h3>
         <div class="panel-body">
             <form class="form-horizontal add-ledger-form" action="{% url 'supplier:updatesupplier' pk=supplier.id %}" method="post" autocomplete="off">
                 <div class="form-group">

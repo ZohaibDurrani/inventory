@@ -45,6 +45,7 @@
                     <tr>
                         <td>
                             <a href="/supplier/deleteSupplier/?id={{supplier.id}}"><button class="confirm-delete btn btn-danger btn-xs" title="Delete"><i class="fa  fa-trash"></i></button></a>
+                            <a href="{% url 'supplier:updatesupplier' pk=supplier.id %}"><button class="btn btn-warning btn-xs" title="Edit"><i class="fa  fa-edit"></i></button></a>
                             <a href="{% url 'supplier:list_supplier_statement' pk=supplier.id %}"><button class="btn btn-success btn-xs" title="All Statements"><i class="fa  fa-info"></i></button></a>
                             {#                            <a href="#"><button class="btn btn-info btn-xs"><i class="fa fa-bar-chart-o"></i></button></a>#}
                         </td>

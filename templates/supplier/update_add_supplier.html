@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block submenu_create_supplier %}active{% endblock %}
+{% block menu_supplier %}active{% endblock %}
+{% block content %}
+<div class="col-md-6">
+    <br>
+    <a href="{% url 'supplier:list_supplier' %}"><button type="button" id="empolyee" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">سپلائر کی فہرست</button></a>
+    <br><br><br>
+    <div class="content-panel">
+        <h3 class="text-center"> {{supplier.name}} |سپلائر فارم کو اپ ڈیٹ کریں۔</h3>
+        <div class="panel-body">
+            <form class="form-horizontal add-ledger-form" action="{% url 'supplier:updatesupplier' pk=supplier.id %}" method="post" autocomplete="off">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        {% csrf_token %}
+                        <label class="pull-right"><strong>نام</strong></label>
+                        <span class="name-error" style="color: red; display: none" >اس کو پر کرنا ضروری ہے</span>
+                        <input type="text" class="form-control name text-right" name="name" placeholder="{{supplier.name}}" value="{{supplier.name}}"><br>
+                        <label class="pull-right"><strong>پتہ</strong></label>
+                        <span class="father_name-error" style="color: red; display: none" >اس کو پر کرنا ضروری ہے</span>
+                        <input type="text" class="form-control father_name text-right" name="address" placeholder="{{supplier.address}}" value="{{supplier.address}}"><br>
+                        <label class="pull-right"><strong>فون نمبر</strong></label>
+                        <span class="mobile-error" style="color: red; display: none" >اس کو پر کرنا ضروری ہے</span>
+                        <input type="text" class="form-control mobile text-right" name="phone" placeholder="{{supplier.phone}}" value="{{supplier.phone}}">
+                        <span class="pull-right" style="color: #ff0000;">خالی چھوڑیں لیکن صرف 0 نہ ڈالیں یا 0321 جیسے دوسرے ہندسے شامل کریں۔</span><br><br>
+                        <label class="pull-right"><strong>موبائل نمبر</strong></label>
+                        <input type="text" class="form-control mobile text-right" name="mobile_no" placeholder="{{supplier.mobile_no}}" value="{{supplier.mobile_no}}">
+                        <span class="pull-right" style="color: #ff0000;">خالی چھوڑیں لیکن صرف 0 نہ ڈالیں یا 0321 جیسے دوسرے ہندسے شامل کریں۔</span><br><br>
+
+                        <button type="submit" id="save" class="btn btn-primary ledger-submit-btn" style="float: right" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing Order">فراہم کنندہ کو محفوظ کریں۔</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

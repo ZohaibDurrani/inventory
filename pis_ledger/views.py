@@ -122,7 +122,6 @@ class CustomerLedgerView(TemplateView):
                 customer.customer_ledger.all()
                 .aggregate(Sum('payment'))
             )
-
             if payment_ledger.get('payment__sum'):
                 payment_amount = float(payment_ledger.get('payment__sum'))
             else:
@@ -130,12 +129,16 @@ class CustomerLedgerView(TemplateView):
 
             if ledger.get('amount__sum'):
                 ledger_amount = float(ledger.get('amount__sum'))
+                print(ledger)
             else:
                 ledger_amount = 0
 
-            remaining_ledger = '%g' % (
-                    ledger_amount - payment_amount
-            )
+            # remaining_ledger = '%g' % (
+            #         ledger_amount - payment_amount
+            # )
+            remaining_ledger = ledger_amount - payment_amount
+            print('Test Remaining', ledger_amount-payment_amount)
+            print('Remaining Ledger',remaining_ledger)
             customer_data.update({
                 'id': customer.id,
                 'ledger_amount': ledger_amount,
@@ -151,12 +154,17 @@ class CustomerLedgerView(TemplateView):
         ledgers = Ledger.objects.all()
         if ledgers:
             grand_ledger = ledgers.aggregate(Sum('amount'))
+            print(grand_ledger, '1')
             grand_ledger = float(grand_ledger.get('amount__sum') or 0)
-
+            print(grand_ledger, '2')
             grand_payment = ledgers.aggregate(Sum('payment'))
+            print('grand_payment', grand_payment)
             grand_payment = float(grand_payment.get('payment__sum') or 0)
+            print('grand_payment sum', grand_payment)
+
 
             total_remaining_amount = grand_ledger - grand_payment
+            print('Total Remaining', total_remaining_amount)
         else:
             total_remaining_amount = 0
 
@@ -164,7 +172,7 @@ class CustomerLedgerView(TemplateView):
             'customer_ledgers': customer_ledger,
             'total_remaining_amount': total_remaining_amount,
         })
-
+        # print(context)
         return context
 
 
@@ -206,13 +214,14 @@ class CustomerLedgerDetailsView(TemplateView):
             })
         else:
             payment_total = 0
-
+        print('Test_Remaining', ledger_total - payment_total)
         context.update({
             'customer': customer,
             'ledgers': ledgers.order_by('-dated'),
             'ledger_total': '%g' % ledger_total,
             'payment_total': '%g' % payment_total,
-            'remaining_amount': '%g' % (ledger_total - payment_total)
+            # 'remaining_amount': '%g' % (ledger_total - payment_total)
+            'remaining_amount': (ledger_total - payment_total)
         })
 
         return context

@@ -43,11 +43,14 @@
                                 <th class="text-center">ادائیگی کی رقم</th>
                                 <th class="text-center">رقم</th>
                                 <th class="text-center">تاریخ</th>
+                                <th class="text-center">سیریل نمبر</th>
+
                             </tr>
                             </thead>
                             <tbody class="item-table-body text-center">
                             {% for ledger in ledgers %}
-                            <tr>
+                            
+                            <tr>    
                                 <td>
                                     <a href="/ledger/deleteledgerdetails/?id={{ledger.id}}"><button class="confirm-delete btn btn-danger btn-xs" title="Delete"><i class="fa  fa-trash"></i></button></a>
                                 </td>
@@ -58,7 +61,7 @@
                                 <td>{{ ledger.amount|floatformat:-2}}</td>
 
                                 <td>{{ ledger.dated }}</td>
-                                
+                                <td>{{ forloop.counter }}</td>
                             </tr>
                             {% endfor %}
                             </tbody>

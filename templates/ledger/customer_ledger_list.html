@@ -52,7 +52,6 @@
                 {% if customer_ledgers %}
                 {% for customer_ledger in customer_ledgers %}
                 <tr>
-
                     <td>
                         <a href="/ledger/deletecustomerledger/?id={{customer_ledger.id}}"><button class="confirm-delete btn btn-danger btn-xs" title="Delete"><i class="fa  fa-trash"></i></button></a>
                         <a href="{% url 'ledger:customer_ledger_detail' customer_id=customer_ledger.id %}"><button

@@ -3,8 +3,8 @@
 {% block content %}
     <div class="col-md-12">
         <br>
-        <a href="{% url 'product:add_stock_items' product_id=product.id %}"><button type="button" id="stock-in" class="btn btn-primary" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">کریں ذخیرہ</button></a>
         <a href="{% url 'product:stock_items_list' %}"><button type="button" id="add-product" class="btn btn-primary" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">مصنوعات کی فہرست</button></a>
+        <a href="{% url 'product:add_stock_items' product_id=product.id %}"><button type="button" id="stock-in" class="btn btn-primary" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">کریں ذخیرہ</button></a>
         <br><br><br>
         <div class="content-panel table-responsive">
             <h1 class="text-center">{{ product.name|title }} <small>{{ product.brand_name|title }}</small> | ذخیرہ</h1><br>
@@ -19,7 +19,7 @@
                     <th class="text-center">خرید کی کل رقم</th>
                     <th class="text-center">خرید کی کل رقم / فی شے کے حساب سے</th> 
                     <th class="text-center">مقدار</th>     
-            
+                    <th class="text-center">سیریل نمبر</th>
                 </tr>
                 </thead>
                 <tbody class="product-table-body text-center">
@@ -35,7 +35,7 @@
                         <td class="#">{{ stockin.total_buying_amount|floatformat:-2 }}</td>
                         <td class="#">{{ stockin.buying_price_item|floatformat:-2 }}</td>
                         <td>{{ stockin.quantity|floatformat:-2 }} </td>
-                        
+                        <td>{{ forloop.counter }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

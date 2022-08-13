@@ -40,6 +40,8 @@
                         <th class="text-center">مصنوعات کی قسم</th> 
                         <th class="text-center">برانڈ کا نام</th> 
                         <th class="text-center">شے کا نام</th>
+                        <th class="text-center">سیریل نمبر</th>
+
                     </tr>
                     </thead>
                     <tbody class="product-table-body text-center">
@@ -65,8 +67,7 @@
                             <td class="#">{{ item.product_category }}</td>
                             <td class="#">{{ item.brand_name }}</td>
                             <td><a href="{% url 'product:item_details' pk=item.id %}">{{ item.name}}</a></td>
-
-                            
+                            <td>{{ forloop.counter }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

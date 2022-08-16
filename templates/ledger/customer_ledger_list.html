@@ -6,11 +6,15 @@
 
 <style>
     .new1{
-        margin-left: 240px;
+        margin-left: 370px;
     }
     .new2{
-        margin-left: 60px;
+        margin-left: 0px;
     }
+    .new{
+        margin-left: -450px;
+    }
+
 </style>
 <div class="col-md-12">
     <!-- کھاتا -->
@@ -36,10 +40,10 @@
             <div class="new1" style="float: left; padding: 12px; font-size: 20px;">
                 <strong>کل کھاتا: </strong><span style="color: red">{{ sum_total_payment|floatformat:-2}}</span>
             </div>
-            <div class="new1" style="float: left; padding: 12px; font-size: 20px;">
+            <div class="new" style="float: left; padding: 12px; font-size: 20px;">
                 <strong>کل بنام: </strong><span id="benam-total" style="color: red">0</span>
             </div>
-            <div class="new2" style="float: left; padding: 12px; font-size: 20px">
+            <div class="new2" style="float: right; padding: 12px; font-size: 20px">
                 <strong>کل ادائیگی: </strong><span style="color: red">{{ sum_total_amount|floatformat:-2}}</span>
             </div>
             

@@ -9,7 +9,7 @@
         margin-left: 240px;
     }
     .new2{
-        margin-left: 30px;
+        margin-left: 60px;
     }
 </style>
 <div class="col-md-12">
@@ -34,11 +34,11 @@
                 <strong>کل بقیہ رقم: </strong><span style="color: red">{{ total_remaining_amount|floatformat:'-2'}}</span>
             </div>
             <div class="new1" style="float: left; padding: 12px; font-size: 20px;">
-                <strong>کل ادائیگی: </strong><span style="color: red">{{ sum_total_amount|floatformat:-2}}</span>
-            </div>
-            
-            <div class="new2" style="float: left; padding: 12px; font-size: 20px">
                 <strong>کل کھاتا: </strong><span style="color: red">{{ sum_total_payment|floatformat:-2}}</span>
+            </div>
+             
+            <div class="new2" style="float: left; padding: 12px; font-size: 20px">
+                <strong>کل ادائیگی: </strong><span style="color: red">{{ sum_total_amount|floatformat:-2}}</span>
             </div>
             
             <!-- <hr> -->

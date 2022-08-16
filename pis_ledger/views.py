@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from http.client import HTTPResponse
+from struct import pack
 from django.views.generic import FormView, TemplateView
 from django.http import HttpResponseRedirect
 from django.db.models import Sum
@@ -216,6 +217,8 @@ class CustomerLedgerDetailsView(TemplateView):
         if ledgers:
             ledger_total = ledgers.aggregate(Sum('amount'))
             ledger_total = float(ledger_total.get('amount__sum'))
+            sum_ledger_amount = ledger_total
+            print('Total Leger Amount', sum_ledger_amount)
             context.update({
 
             })
@@ -225,11 +228,14 @@ class CustomerLedgerDetailsView(TemplateView):
         if ledgers:
             payment_total = ledgers.aggregate(Sum('payment'))
             payment_total = float(payment_total.get('payment__sum'))
+            sum_of_payment = payment_total
+            print('Total Payment Amount',sum_of_payment)
             context.update({
 
             })
         else:
             payment_total = 0
+        
         print('Test_Remaining', ledger_total - payment_total)
         context.update({
             'customer': customer,
@@ -237,7 +243,9 @@ class CustomerLedgerDetailsView(TemplateView):
             'ledger_total': '%g' % ledger_total,
             'payment_total': '%g' % payment_total,
             # 'remaining_amount': '%g' % (ledger_total - payment_total)
-            'remaining_amount': (ledger_total - payment_total)
+            'remaining_amount': (ledger_total - payment_total),
+            'sum_of_legder': sum_ledger_amount,
+            'sum_of_payment': sum_of_payment,
         })
 
         return context

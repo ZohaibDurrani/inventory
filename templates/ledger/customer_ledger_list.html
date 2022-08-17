@@ -140,7 +140,12 @@ $("#ItemsTable tr").each(function(){
     arr-=parseInt(($(this).find("td:nth-child(3)").text())); //put elements into array
     
 });
+if (isNaN(arr)) {
+    document.getElementById("benam-total").innerHTML = 0;
+}
+else {
 document.getElementById("benam-total").innerHTML = arr;
+}
 // console.log(arr);
 // $('table > tbody > tr').each(function() {
 //     var total=0;

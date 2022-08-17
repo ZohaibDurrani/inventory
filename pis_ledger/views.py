@@ -16,6 +16,7 @@ from  pis_ledger.forms import Ledger
 from pis_com.models import Customer
 
 
+
 class AddNewLedger(FormView):
     form_class = CustomerForm
     template_name = 'ledger/create_ledger.html'
@@ -115,6 +116,8 @@ class CustomerLedgerView(TemplateView):
             retailer_customer.all().order_by('customer_name')
         ).order_by('customer_name')
         customer_ledger = []
+        sum_of_total_amount=0
+        sum_of_total_payment=0
 
         for customer in customers:
             customer_data = {}

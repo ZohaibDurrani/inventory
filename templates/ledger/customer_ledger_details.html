@@ -3,40 +3,83 @@
 {% block submenu_customer_ledger %}active{% endblock %}
 
 {% block content %}
+    <!-- کھاتا -->
+
+<style>
+    .new1{
+        margin-left: 370px;
+    }
+    .new2{
+        margin-right: 230px;
+    }
+</style>
+    
 <br>
-<a href="{% url 'ledger:customer_ledger_list'%}"><button type="button" id="back-customer" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Ledger List</button></a>
-<a href="{% url 'ledger:add_ledger' customer_id=customer.id %}"><button type="button" id="ledger-customer" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Add New Ledger</button></a>
-<a href="{% url 'ledger:add_payment' customer_id=customer.id %}"><button type="button" id="payment-customer" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Add payment</button></a>
+<a href="{% url 'ledger:customer_ledger_list'%}"><button type="button" id="back-customer" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">لسٹ کھاتا  </button></a>
+<a href="{% url 'ledger:add_ledger' customer_id=customer.id %}"><button type="button" id="ledger-customer" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">نیا کھاتا شامل کریں۔</button></a>
+<a href="{% url 'ledger:add_payment' customer_id=customer.id %}"><button type="button" id="payment-customer" class="btn btn-primary" id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">ادائیگی شامل کریں۔</button></a>
 <br><br><br>
 <div class="container-fluid">
     <div class="row">
         <div class="content-panel">
             <div class="panel-body table-responsive">
-            <h2 class="text-center">{{ customer.customer_name|title }} <small>Ledger Detail</small></h2>
+            <h2 class="text-center">{{ customer.customer_name|title }} <small>کھاتا کی تفصیل</small></h2>
             {% if ledgers %}
             <div class="col-lg-12 col-md-12 col-sm-12">
                         <div style="float: right; padding: 12px; font-size: 20px">
-                            <strong style="float: right">Total Remaining Amount: <span style="color: red">{{ remaining_amount|floatformat:-2 }}</span></strong>
+                            <strong style="float: right">کل بقیہ رقم: <span style="color: red">{{ remaining_amount|floatformat:-2 }}</span></strong>
                         </div>
-                        <hr>
+                        <div class="new1" style="float: left; padding: 12px; font-size: 20px;">
+                            <strong>کل ادائیگی کی رقم: </strong><span style="color: red">{{ sum_of_payment|floatformat:-2}}</span>
+                        </div>
+                        
+                        <div class="new2" style="float: right; padding: 12px; font-size: 20px">
+                            <strong>کل رقم: </strong><span style="color: red">{{ sum_of_legder|floatformat:-2}}</span>
+                        </div>
+                        
+                        <!-- <hr> -->
                         <table class="table table-striped table-advance table-bordered table-hover ledger-table table-responsive">
                             <thead>
-                            <tr>
+                            <!-- <tr>
                                 <th class="text-center">Date</th>
                                 <th class="text-center">Amount</th>
                                 <th class="text-center">Payment Amount</th>
                                 <th class="text-center">Invoice</th>
                                 <th class="text-center">Description</th>
+                            </tr> -->
+                            <!-- <tr>
+                                <th class="text-center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></th>
+                                <th class="text-center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></th>
+                                <th class="text-center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"/font></font></th>
+                                <th class="text-center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></th>
+                                <th class="text-center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></th>
+                            </tr> -->
+                            <tr>
+                                <th class="text-center">اعمال</th>
+                                <th class="text-center">تفصیل</th>
+                                <th class="text-center">رسید</th>
+                                <th class="text-center">ادائیگی کی رقم</th>
+                                <th class="text-center">رقم</th>
+                                <th class="text-center">تاریخ</th>
+                                <th class="text-center">سیریل نمبر</th>
+
                             </tr>
                             </thead>
                             <tbody class="item-table-body text-center">
                             {% for ledger in ledgers %}
-                            <tr>
-                                <td>{{ ledger.dated }}</td>
-                                <td>{{ ledger.amount|floatformat:-2}}</td>
-                                <td>{{ ledger.payment|floatformat:-2}}</td>
-                                <td>{{ ledger.invoice.receipt_no }}</td>
+                            
+                            <tr>    
+                                <td>
+                                    <a href="/ledger/deleteledgerdetails/?id={{ledger.id}}"><button class="confirm-delete btn btn-danger btn-xs" title="Delete"><i class="fa  fa-trash"></i></button></a>
+                                </td>
                                 <td>{{ ledger.description }}</td>
+                                <td>{{ ledger.invoice.receipt_no }}</td>
+                                <td>{{ ledger.payment|floatformat:-2}}</td>
+
+                                <td>{{ ledger.amount|floatformat:-2}}</td>
+
+                                <td>{{ ledger.dated }}</td>
+                                <td>{{ forloop.counter }}</td>
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -65,5 +108,8 @@ $('#do-pay').on('click', function() {
        $this.button('reset');
    }, 5000);
 });
+$(document).on('click', '.confirm-delete', function(){
+    return confirm('Are you sure you want to delete this?');
+})
     </script>
 {% endblock %}

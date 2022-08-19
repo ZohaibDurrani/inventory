@@ -10,14 +10,26 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.db.models import Sum
 from django.utils import timezone
-
+from django.shortcuts import render
 from pis_com.models import Customer,FeedBack
 from pis_com.models import AdminConfiguration
 from pis_com.forms import CustomerForm,FeedBackForm
 
 from pis_retailer.models import RetailerUser
 from pis_retailer.forms import RetailerForm, RetailerUserForm
+import json
+import datetime
+# from rest_framework.decorators import api_view
 
+from calendar import monthrange
+from django.utils import timezone
+from dateutil.relativedelta import relativedelta
+
+from django.views.generic import View
+from django.http import JsonResponse
+from django.db.models import Sum
+
+from pis_product.models import StockOut
 
 class LoginView(FormView):
     template_name = 'login.html'
@@ -269,59 +281,210 @@ class CreateFeedBack(FormView):
     def form_invalid(self, form):
         return super(CreateFeedBack, self).form_invalid(form)
 
-class ReportsView(TemplateView):
-    template_name = 'reports.html'
+# class ReportsView(TemplateView):
+#     template_name = 'reports.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        if not self.request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('login'))
-        else:
+#     def dispatch(self, request, *args, **kwargs):
+#         # if not self.request.user.is_authenticated:
+#         #     print('not authenticated')
+#         #     return HttpResponseRedirect(reverse('login'))
+#         # else:
+#         #     print('authenticated')
+#         #     if self.request.user.retailer_user:
+#         #         if (
+#         #             self.request.user.retailer_user.role_type ==
+#         #                 self.request.user.retailer_user.ROLE_TYPE_SALESMAN
+#         #         ):
+#         #             return HttpResponseRedirect(reverse('sales:invoice_list'))
+#         #     if self.request.user.retailer_user:
+#         #         if (
+#         #                 self.request.user.retailer_user.role_type ==
+#         #                 self.request.user.retailer_user.ROLE_TYPE_DATA_ENTRY_USER
+#         #         ):
+#         #             return HttpResponseRedirect(reverse('product:items_list'))
 
-            if self.request.user.retailer_user:
-                if (
-                    self.request.user.retailer_user.role_type ==
-                        self.request.user.retailer_user.ROLE_TYPE_SALESMAN
-                ):
-                    return HttpResponseRedirect(reverse('sales:invoice_list'))
-            if self.request.user.retailer_user:
-                if (
-                        self.request.user.retailer_user.role_type ==
-                        self.request.user.retailer_user.ROLE_TYPE_DATA_ENTRY_USER
-                ):
-                    return HttpResponseRedirect(reverse('product:items_list'))
+#         return super(
+#             ReportsView, self).dispatch(request, *args, **kwargs)
 
-        return super(
-            ReportsView, self).dispatch(request, *args, **kwargs)
+#     def get_context_data(self, **kwargs):
+#         context = super(ReportsView, self).get_context_data(**kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super(ReportsView, self).get_context_data(**kwargs)
+#         sales = self.request.user.retailer_user.retailer.retailer_sales.all()
+#         sales_sum = sales.aggregate(
+#             total_sales=Sum('grand_total')
+#         )
 
-        sales = self.request.user.retailer_user.retailer.retailer_sales.all()
-        sales_sum = sales.aggregate(
+#         today_sales = (
+#             self.request.user.retailer_user.retailer.
+#             retailer_sales.filter(
+#                 created_at__icontains=timezone.now().date()
+#             )
+#         )
+#         today_sales_sum = today_sales.aggregate(
+#             total_sales=Sum('grand_total')
+#         )
+
+#         context.update({
+#             'sales_count': sales.count(),
+#             'sales_sum': (
+#                 int(sales_sum.get('total_sales')) if
+#                 sales_sum.get('total_sales') else 0
+#             ),
+#             'today_sales_count': today_sales.count(),
+#             'today_sales_sum': (
+#                 int(today_sales_sum.get('total_sales')) if
+#                 today_sales_sum.get('total_sales') else 0
+#             )
+#         })
+
+#         return context
+def sales_data(obj, stockout=None, date=None, week_date=None, month_date=None):
+        # print('sales_data')
+        sales = obj.aggregate(
             total_sales=Sum('grand_total')
         )
 
-        today_sales = (
-            self.request.user.retailer_user.retailer.
-            retailer_sales.filter(
-                created_at__icontains=timezone.now().date()
-            )
-        )
-        today_sales_sum = today_sales.aggregate(
-            total_sales=Sum('grand_total')
-        )
-
-        context.update({
-            'sales_count': sales.count(),
-            'sales_sum': (
-                int(sales_sum.get('total_sales')) if
-                sales_sum.get('total_sales') else 0
+        data = {
+            'sales': (
+                int(sales.get('total_sales')) if
+                sales.get('total_sales') else 0
             ),
-            'today_sales_count': today_sales.count(),
-            'today_sales_sum': (
-                int(today_sales_sum.get('total_sales')) if
-                today_sales_sum.get('total_sales') else 0
-            )
+        }
+
+        profit = 0
+        if stockout:
+            try:
+                selling_amount = stockout.aggregate(selling_amount=Sum('selling_price'))
+                buying_amount = stockout.aggregate(buying_amount=Sum('buying_price'))
+                selling_amount = selling_amount.get('selling_amount') or 0
+                buying_amount = buying_amount.get('buying_amount') or 0
+            except:
+                selling_amount = 0
+                buying_amount = 0
+
+            profit = float(selling_amount) - float(buying_amount)
+        data.update({
+            'profit': profit
         })
 
-        return context
+        if week_date:
+            data.update({
+                'date': week_date.strftime('%a %d, %b')
+            })
+        elif month_date:
+            data.update({
+                'day': month_date.strftime('%b')
+            })
+        else:
+            data.update({
+                'date': date.strftime('%d-%b-%Y')
+            })
+        # print(data)
+        return data
+def daily(request):
+    sales = []
+    for day in range(12):
+        sales_day = timezone.now() - relativedelta(days=day)
+        retailer_sales = (
+            request.user.retailer_user.retailer.
+            retailer_sales.filter(created_at__icontains=sales_day.date())
+        )
+
+        retailer_products = (request.user.retailer_user.retailer.
+                retailer_product.all().values_list('id', flat=True))
+
+        stockout = StockOut.objects.filter(
+            dated__icontains=sales_day.date(),
+            product__in=retailer_products
+        )
+
+        data = sales_data(
+            obj=retailer_sales, stockout=stockout, date=sales_day
+        )
+        sales.append(data)
+    return sales
+
+# def weekly(request):
+#     sales = []
+#     for week in range(1, 13):
+#         sales_start_week = timezone.now() - relativedelta(weeks=week)
+#         sales_end_week = timezone.now() - relativedelta(weeks=week - 1)
+
+#         retailer_sales = (
+#             request.user.retailer_user.retailer.retailer_sales.filter(
+#                 created_at__gte=sales_start_week,
+#                 created_at__lt=sales_end_week
+#             )
+#         )
+#         retailer_products = (request.user.retailer_user.retailer.
+#                                 retailer_product.all().values_list('id',
+#                                                                 flat=True))
+
+#         stockout = StockOut.objects.filter(
+#             dated__gte=sales_start_week,
+#             dated__lt=sales_end_week,
+#             product__in=retailer_products
+#         )
+#         data = sales_data(
+#             obj=retailer_sales, stockout=stockout, week_date=sales_end_week
+#         )
+#         sales.append(data)
+#     return sales
+
+def monthly(request):
+    sales = []
+
+    for month in range(12):
+        date_month = timezone.now() - relativedelta(months=month)
+        month_range = monthrange(
+            date_month.year, date_month.month
+        )
+        start_month = datetime.datetime(
+            date_month.year, date_month.month, 1)
+
+        end_month = datetime.datetime(
+            date_month.year, date_month.month, month_range[1]
+        )
+
+        retailer_sales = (
+            request.user.retailer_user.retailer.retailer_sales.filter(
+                created_at__gte=start_month,
+                created_at__lt=end_month.replace(
+                    hour=23, minute=59, second=59)
+            )
+        )
+
+        retailer_products = (request.user.retailer_user.retailer.
+                                retailer_product.all().values_list('id',
+                                                                flat=True))
+        stockout = StockOut.objects.filter(
+            dated__gte=start_month,
+            dated__lt=end_month.replace(
+                    hour=23, minute=59, second=59),
+            product__in=retailer_products
+        )
+
+        data = sales_data(
+            obj=retailer_sales, stockout=stockout, month_date=end_month
+        )
+        sales.append(data)
+    return sales
+
+def reportView(request):
+    if not request.user.is_authenticated:
+        print('not authenticated')
+        return HttpResponseRedirect(reverse('login'))
+    else:
+        
+        daily_sales = daily(request)
+        # weekly_sales = weekly(request)
+        monthly_sales = monthly(request)
+        # print(weekly_sales)
+        
+        return render(request, 'reports.html',
+        {
+            'daily_sales': daily_sales,
+            # 'weekly_sales': weekly_sales,
+            'monthly_sales': monthly_sales
+        }
+        )

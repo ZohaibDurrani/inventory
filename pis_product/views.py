@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from urllib import request
 from django.shortcuts import render
 
 from django.views.generic import TemplateView, UpdateView
@@ -378,7 +379,6 @@ class StockDetailView(TemplateView):
             'item_stock_in': item_stocks_in.order_by('-dated_order'),
             'item_stock_out': item_stocks_out.order_by('-dated'),
         })
-
         return context
 
 
@@ -447,3 +447,11 @@ class StockInUpdateView(UpdateView):
     
     def form_invalid(self, form):
         return super(StockInUpdateView, self).form_invalid(form)
+
+def deletestockout(request):
+    stockout = StockOut.objects.get(id=request.GET.get('id'))
+    stockout.delete()
+    return HttpResponseRedirect(
+        reverse('product:stockout_list',
+                kwargs={'product_id': stockout.product.id})
+    )

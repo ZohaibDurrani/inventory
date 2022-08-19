@@ -19,8 +19,8 @@
 
     <div class="col-lg-10 col-md-10 col-sm-10">
         <br>
-        <a href="{% url 'sales:create_invoice' %}"><button type="button" id="invoice" class="btn btn-primary"  id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">Create Invoice</button></a>
-        <button type="button" class="btn btn-primary print-invoice-btn" onclick="PrintInvoice('print-invoice')" >Print Invoice</button>
+        <a href="{% url 'sales:create_invoice' %}"><button type="button" id="invoice" class="btn btn-primary"  id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>Processing">رسید بنائیں</button></a>
+        <button type="button" class="btn btn-primary print-invoice-btn" onclick="PrintInvoice('print-invoice')" >رسید پرنٹ کریں۔</button>
         <br><br><br>
         <div class="content-panel print-invoice" id="print-invoice" style="padding: 5px">
             <div class="row">
@@ -29,7 +29,7 @@
                         <h1 style="font-size:15px"><strong>{{ request.user.retailer_user.retailer.name }}</strong></h1>
                         {% if request.user.user_profile.address %}<span class="f-size"><strong>{{ request.user.user_profile.address }}</strong></span><br>{% endif %}
                         {% if request.user.user_profile.phone_no %}<small class="f-size"><strong>Phone No:</strong> {{ request.user.user_profile.phone_no }} </small>{% endif %} {% if request.user.user_profile.mobile_no %}<small class="f-size"><strong>Mobile No: </strong>{{ request.user.user_profile.mobile_no }} </small>{% endif %}
-                        <h6 style="font-size:14px;border-bottom: 1px solid #000">Invoice</h6>
+                        <h6 style="font-size:14px;border-bottom: 1px solid #000">رسید</h6>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-12">
@@ -54,7 +54,7 @@
                             {% endif %}
                         </div>
                             <div class="col-md-12 pull-left">
-                            <label><strong class="f-size">Billed Date:</strong></label><span class="f-size" style="margin: 15px;">{{ invoice.created_at.date }}</span>
+                            <label><strong class="f-size">بل کی تاریخ:</strong></label><span class="f-size" style="margin: 15px;">{{ invoice.created_at.date }}</span>
                         </div>
                         </div>
                     </div>
@@ -63,14 +63,14 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <span class="f-size" style="float: right;">Receipt No. <span style="color:red">{{ invoice.receipt_no }}</span></span>
+                    <span class="f-size" style="float: right;">رسید نمبر. <span style="color:red">{{ invoice.receipt_no }}</span></span>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr class="item-row">
-                                <th >Item</th>
-                                <th >Quantity</th>
-                                <th >Total</th>
+                                <th >آئٹم</th>
+                                <th >مقدار</th>
+                                <th >کل</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -104,42 +104,42 @@
                             <tr><td colspan="4" style="color:white"></td></tr>
 {#                            <tr style="border-top: 3px solid">#}
 {#                                <td></td>#}
-{#                                <td class="text-right"><strong >Sub Total</strong></td>#}
+{#                                <td class="text-right"><strong >ذیلی کل</strong></td>#}
 {#                                <td><span id="subtotal">{{ invoice.sub_total|floatformat:-2 }}</span></td>#}
 {#                            </tr>#}
 {#                            <tr>#}
-{#                                <td><strong >Total Quantity: </strong><span id="totalQty" style="color: red; font-weight: bold; font-size: 8px">{{ invoice.total_quantity }}</span> </td>#}
-{#                                <td class="text-right"><strong >Discount</strong></td>#}
+{#                                <td><strong >کل مقدار: </strong><span id="totalQty" style="color: red; font-weight: bold; font-size: 8px">{{ invoice.total_quantity }}</span> </td>#}
+{#                                <td class="text-right"><strong >رعایت</strong></td>#}
 {#                                <td>{{ invoice.discount|floatformat:-2 }}</td>#}
 {#                            </tr>#}
 {#                            <tr>#}
 {#                                <td></td>#}
-{#                                <td class="text-right" ><strong >Shipping</strong></td>#}
+{#                                <td class="text-right" ><strong >شپنگ</strong></td>#}
 {#                                <td>{{ invoice.shipping|floatformat:-2 }}</td>#}
 {#                            </tr>#}
                             <tr>
-                                <td><strong >Total Quantity: </strong><span id="totalQty" style="color: red; font-weight: bold;">{{ invoice.total_quantity }} </span> </td>
-                                <td class="text-right" ><strong >Grand Total</strong></td>
+                                <td><strong >کل مقدار: </strong><span id="totalQty" style="color: red; font-weight: bold;">{{ invoice.total_quantity }} </span> </td>
+                                <td class="text-right" ><strong >مجموعی عدد	</strong></td>
                                 <td><span id="grandTotal" style="color: red;">{{ invoice.grand_total|floatformat:-2 }}</span></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td class="text-right"><strong >Cash Payment</strong></td>
+                                <td class="text-right"><strong >نقد ادائیگی	</strong></td>
                                 <td><span id="cash_payment" >{{ invoice.cash_payment|floatformat:-2 }}</span></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td class="text-right"><strong >Returned Cash</strong></td>
+                                <td class="text-right"><strong >کیش واپس کر دیا۔	</strong></td>
                                 <td><span id="returned_cash"  >{{invoice.returned_payment|floatformat:-2 }}</span></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td class="text-right"><strong >Received Amount</strong></td>
+                                <td class="text-right"><strong >وصول شدہ رقم	</strong></td>
                                 <td><span id="receivedAmount" >{{ invoice.paid_amount|floatformat:-2 }}</span></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td class="text-right" ><strong >Remaining Payment</strong></td>
+                                <td class="text-right" ><strong >باقی ادائیگی	</strong></td>
                                 <td><span id="remainingAmount">{{ invoice.remaining_payment|floatformat:-2 }}</span></td>
                             </tr>
                             </tbody>
@@ -149,17 +149,17 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-md-12" style="text-align: center;">
-                    <strong style="font-size:12px;color:#000">Thank You</strong>
+                    <strong style="font-size:12px;color:#000">شکریہ</strong>
                 </div>
                 <div class="col-xs-12 col-md-12" style="text-align: center;">
                     <strong class="f-size">
-                        Software Developed By Partum Solutions</strong>
+                        Software Developed By ICT solution</strong>
                 </div>
                 <div class="col-lg-6 col-xs-12 text-center">
                     <span class="f-size">www.partumsolutions.com</span>
                 </div>
                 <div class="col-lg-6 col-xs-12 text-center">
-                    <span class="f-size">ph:+92-332-8364441</span>
+                    <span class="f-size">ph:+92-321-2881942</span>
                 </div>
             </div>
         </div>
